@@ -44,24 +44,25 @@ defmodule Supex.Ugen do
   @spec lfo(%Supex.Ugen{}) :: struct()
   def lfo(%__MODULE__{} = ugen), do: ugen |> struct!(lfo: true) |> update_sc_command()
 
+
   @doc since: "0.1.0"
-  @spec freq(%Supex.Ugen{}, integer() | float()) :: struct()
+  @spec freq(%Supex.Ugen{}, integer() | float() | binary()) :: struct()
   def freq(%__MODULE__{} = ugen, freq), do: ugen |> struct!(freq: freq) |> update_sc_command()
 
   @doc since: "0.1.0"
-  @spec width(%Supex.Ugen{}, integer() | float()) :: struct()
+  @spec width(%Supex.Ugen{}, integer() | float() | binary()) :: struct()
   def width(%__MODULE__{} = ugen, width), do: ugen |> struct!(width: width) |> update_sc_command()
 
   @doc since: "0.1.0"
-  @spec phase(%Supex.Ugen{}, integer() | float()) :: struct()
+  @spec phase(%Supex.Ugen{}, integer() | float() | binary()) :: struct()
   def phase(%__MODULE__{} = ugen, phase), do: ugen |> struct!(phase: phase) |> update_sc_command()
 
   @doc since: "0.1.0"
-  @spec mul(%Supex.Ugen{}, integer() | float()) :: struct()
+  @spec mul(%Supex.Ugen{}, integer() | float() | binary()) :: struct()
   def mul(%__MODULE__{} = ugen, mul), do: ugen |> struct!(mul: mul) |> update_sc_command()
 
   @doc since: "0.1.0"
-  @spec add(%Supex.Ugen{}, integer() | float()) :: struct()
+  @spec add(%Supex.Ugen{}, integer() | float() | binary()) :: struct()
   def add(%__MODULE__{} = ugen, add), do: ugen |> struct!(add: add) |> update_sc_command()
 
   @doc """

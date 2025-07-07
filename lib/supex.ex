@@ -130,7 +130,7 @@ defmodule Supex do
   `freq` can be an integer or float.
   """
   @doc since: "0.1.0"
-  @spec freq(%Supex.Ugen{}, integer() | float()) :: struct()
+  @spec freq(%Ugen{}, integer() | float() | binary()) :: struct()
   defdelegate freq(ugen, freq), to: Ugen
 
   @doc """
@@ -138,14 +138,14 @@ defmodule Supex do
   `width` should be a value between `0.01` and `0.99`.
   """
   @doc since: "0.1.0"
-  @spec width(%Supex.Ugen{}, integer() | float()) :: struct()
+  @spec width(%Ugen{}, integer() | float() | binary()) :: struct()
   defdelegate width(ugen, width), to: Ugen
 
   @doc """
   The phase of a sinus wave.
   """
   @doc since: "0.1.0"
-  @spec phase(%Supex.Ugen{}, integer() | float()) :: struct()
+  @spec phase(%Ugen{}, integer() | float() | binary()) :: struct()
   defdelegate phase(ugen, phase), to: Ugen
 
   @doc """
@@ -153,7 +153,7 @@ defmodule Supex do
   Chose values between `0.1` and `1` for not hurting your ears.
   """
   @doc since: "0.1.0"
-  @spec mul(%Supex.Ugen{}, integer() | float()) :: struct()
+  @spec mul(%Ugen{}, integer() | float() | binary() | binary()) :: struct()
   defdelegate mul(ugen, mul), to: Ugen
 
   @doc """
@@ -161,7 +161,7 @@ defmodule Supex do
   Values can be `0.1` or `1` for example.
   """
   @doc since: "0.1.0"
-  @spec add(%Supex.Ugen{}, integer() | float()) :: struct()
+  @spec add(%Ugen{}, integer() | float() | binary()) :: struct()
   defdelegate add(ugen, add), to: Ugen
 
   @doc """
@@ -169,7 +169,7 @@ defmodule Supex do
   e.g. with a name the singnal can be stopped on the SuperCollider server.
   """
   @doc since: "0.1.0"
-  @spec name(%Supex.Ugen{}, binary()) :: struct()
+  @spec name(%Ugen{}, binary()) :: struct()
   defdelegate name(ugen, name), to: Ugen
 
   @doc """
@@ -188,7 +188,7 @@ defmodule Supex do
     iex> osc |> freq(269) |> name("y") |> play
   """
   @doc since: "0.1.0"
-  @spec play(%Supex.Ugen{sc_command: binary(), sc_name: binary()} | binary()) :: :ok
+  @spec play(%Ugen{sc_command: binary(), sc_name: binary()} | binary()) :: :ok
   def play(%Ugen{} = ugen), do: ugen |> Pan.center() |> Ugen.play() |> Sclang.execute()
 
   @doc since: "0.1.0"
@@ -204,7 +204,7 @@ defmodule Supex do
     iex> osc |> name("y") |> stop
   """
   @doc since: "0.1.0"
-  @spec stop(%Supex.Ugen{sc_name: binary()}) :: :ok
+  @spec stop(%Ugen{sc_name: binary()}) :: :ok
   def stop(%Ugen{} = ugen) do
     ugen |> Ugen.stop() |> Sclang.execute()
   end
