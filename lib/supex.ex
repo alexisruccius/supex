@@ -119,11 +119,8 @@ defmodule Supex do
     iex> osc(:pulse) |> mul(osc|>freq(2)|>mul(0.4)|>add(0.5)|>lfo) |> freq(osc(:saw)|>freq(0.2)|>mul(100)|>add(100)|>lfo) |> play
   """
   @doc since: "0.1.0"
-  @spec lfo(%Supex.Ugen{}) :: binary()
-  def lfo(%Ugen{} = ugen) do
-    %Ugen{sc_command: sc_command} = ugen |> Ugen.lfo()
-    sc_command
-  end
+  @spec lfo(%Ugen{}) :: binary()
+  defdelegate lfo(ugen), to: Ugen
 
   @doc """
   Tune the frequency of an oscillator.
@@ -153,7 +150,7 @@ defmodule Supex do
   Chose values between `0.1` and `1` for not hurting your ears.
   """
   @doc since: "0.1.0"
-  @spec mul(%Ugen{}, integer() | float() | binary() | binary()) :: struct()
+  @spec mul(%Ugen{}, integer() | float() | binary()) :: struct()
   defdelegate mul(ugen, mul), to: Ugen
 
   @doc """

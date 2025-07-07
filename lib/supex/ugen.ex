@@ -41,9 +41,11 @@ defmodule Supex.Ugen do
   cf. https://doc.sccode.org/Tutorials/Getting-Started/05-Functions-and-Sound.html
   """
   @doc since: "0.1.0"
-  @spec lfo(%Supex.Ugen{}) :: struct()
-  def lfo(%__MODULE__{} = ugen), do: ugen |> struct!(lfo: true) |> update_sc_command()
-
+  @spec lfo(%Supex.Ugen{}) :: binary()
+  def lfo(%__MODULE__{} = ugen) do
+    %__MODULE__{sc_command: sc_command} = ugen |> struct!(lfo: true) |> update_sc_command()
+    sc_command
+  end
 
   @doc since: "0.1.0"
   @spec freq(%Supex.Ugen{}, integer() | float() | binary()) :: struct()

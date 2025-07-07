@@ -68,7 +68,7 @@ defmodule Supex.UgenTest do
   end
 
   describe "lfo/1" do
-    test "transform a oscillator to a LFO" do
+    test "transform a oscillator to a LFO sc_command" do
       ugen = %Ugen{
         osc: :sin,
         freq: 4,
@@ -78,11 +78,11 @@ defmodule Supex.UgenTest do
         lfo: false
       }
 
-      %Ugen{sc_command: sc_command} = ugen |> Ugen.lfo()
+      sc_command = ugen |> Ugen.lfo()
       assert sc_command == "SinOsc.kr(freq: 4, phase: 0, mul: 0.2, add: 0.4);"
     end
 
-    test "transform a SAW oscillator to a LFO" do
+    test "transform a SAW oscillator to a LFO sc_command" do
       ugen = %Ugen{
         osc: :saw,
         freq: 5,
@@ -91,7 +91,7 @@ defmodule Supex.UgenTest do
         lfo: false
       }
 
-      %Ugen{sc_command: sc_command} = ugen |> Ugen.lfo()
+      sc_command = ugen |> Ugen.lfo()
       assert sc_command == "Saw.kr(freq: 5, mul: 0.1, add: 0);"
     end
   end
