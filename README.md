@@ -13,7 +13,6 @@ Built for musicians, coders, and live performers who want to use Elixir for audi
 
 👉 Requires `sclang` installed (`sudo apt install sclang` on Linux)
 
-
 ## Installation
 
 The package can be installed by adding `supex` to your list of dependencies in `mix.exs`:
@@ -76,6 +75,12 @@ iex> osc |> name("z") |> stop
 
 ## ⚠️ Disclaimer  
 
-SuperCollider and Supex can produce loud, sudden sounds.  
-Use volume control and a limiter to protect your ears.  
+SuperCollider and Supex can produce loud, sudden sounds.
+Use volume control and a limiter to protect your ears.
 Avoid hearing damage.
+
+## 🛠️ Note
+
+Supex is in early development.
+Expect API changes.
+
