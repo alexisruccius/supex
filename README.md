@@ -61,8 +61,8 @@ iex> osc |> stop
 
 ```elixir
 iex> import Supex
-iex> osc(:pulse) |> freq("SinOsc.kr(0.4).range(169, 269)") |> width("SinOsc.kr(6.9).range(0.01, 0.8)")|> mul(0.3) |> name("x") |> play
-iex> osc |> name("x") |> stop
+iex> osc(:pulse) |> freq("SinOsc.kr(0.4).range(169, 269)") |> width("SinOsc.kr(6.9).range(0.01, 0.8)")|> mul(0.3) |> name("y") |> play
+iex> osc |> name("y") |> stop
 ```
 
 🔤 Send a raw SuperCollider expression:
@@ -70,7 +70,7 @@ iex> osc |> name("x") |> stop
 ```elixir
 iex> import Supex
 iex> "RLPF.ar(Pulse.ar([100, 250], 0.5, 0.1), XLine.kr(8000, 400, 5), 0.05)" |> play
-iex> osc |> name("z") |> stop
+iex> osc |> stop
 ```
 
 ## ⚠️ Disclaimer  
