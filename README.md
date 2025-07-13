@@ -20,7 +20,7 @@ The package can be installed by adding `supex` to your list of dependencies in `
 ```elixir
 def deps do
 [
-  {:supex, "~> 0.1.0"}
+  {:supex, "~> 0.1.1"}
 ]
 end
 ```
@@ -45,8 +45,10 @@ iex> Supex.Sclang.start_link(:ok)
 
 ```elixir
 iex> import Supex
-iex> osc |> freq(269) |> name("y") |> play
-iex> osc |> name("y") |> stop
+iex> osc |> freq(269) |> play
+iex> osc |> stop
+# or
+iex> stop_playing
 ```
 
 ▶ Modulate volume of a sine wave using another sine as LFO:
@@ -61,8 +63,8 @@ iex> osc |> stop
 
 ```elixir
 iex> import Supex
-iex> osc(:pulse) |> freq("SinOsc.kr(0.4).range(169, 269)") |> width("SinOsc.kr(6.9).range(0.01, 0.8)")|> mul(0.3) |> name("y") |> play
-iex> osc |> name("y") |> stop
+iex> osc(:pulse) |> freq("SinOsc.kr(0.4).range(169, 269)") |> width("SinOsc.kr(6.9).range(0.01, 0.8)")|> mul(0.3) |> play
+iex> osc |> stop
 ```
 
 🔤 Send a raw SuperCollider expression:
