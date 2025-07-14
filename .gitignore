@@ -24,3 +24,7 @@ supex-*.tar
 
 # The organization dir.
 /orga/
+
+# xref files
+xref*
+

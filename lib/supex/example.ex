@@ -11,25 +11,25 @@ defmodule Supex.Example do
   import Supex
 
   @doc since: "0.1.0"
-  @spec pulse_wave_modulation_with_lfo() :: none()
+  @spec pulse_wave_modulation_with_lfo() :: struct()
   def pulse_wave_modulation_with_lfo() do
-    osc(:pulse)
+    pulse()
     |> mul(
-      osc()
+      sin()
       |> freq(2)
       |> mul(0.4)
       |> add(0.5)
       |> lfo
     )
     |> freq(
-      osc(:saw)
+      saw()
       |> freq(0.1)
       |> mul(100)
       |> add(100)
       |> lfo
     )
     |> width(
-      osc()
+      sin()
       |> freq(6)
       |> mul(0.5)
       |> add(0.5)
