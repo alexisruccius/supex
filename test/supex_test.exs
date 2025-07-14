@@ -1,28 +1,18 @@
 defmodule SupexTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
-  alias Supex.Ugen
+  alias Supex.Sclang
+  alias Supex.Ugen.SinOsc
 
   describe "osc/0" do
-    test "returns a %Ugen sin oscillator" do
-      assert %Supex.Ugen{
-               add: 0,
-               width: 0.5,
-               phase: 0,
-               sc_command: "SinOsc.ar(freq: 440, phase: 0, mul: 0.1, add: 0);",
-               osc: :sin,
-               freq: 440,
-               mul: 0.1,
-               sc_name: "x",
-               lfo: false
-             } = Supex.osc()
+    test "returns a %SinOsc sin oscillator" do
+      assert %SinOsc{add: 0, phase: 0, freq: 440, mul: 0.1, lfo: false} = Supex.sin()
     end
   end
 
   describe "lfo/1" do
-    test "transforms the oscillator to an LFO SuperCollider's command" do
-      ugen = %Ugen{
-        osc: :sin,
+    test "sets the LFO to true" do
+      ugen = %SinOsc{
         freq: 4,
         phase: 0,
         mul: 0.2,
@@ -30,41 +20,49 @@ defmodule SupexTest do
         lfo: false
       }
 
-      assert ugen |> Supex.lfo() == "SinOsc.kr(freq: 4, phase: 0, mul: 0.2, add: 0.4);"
+      assert %SinOsc{lfo: true} = ugen |> Supex.lfo()
     end
   end
 
   describe "phase/2" do
     test "gets the oscillator as an LFO SuperCollider's command" do
-      ugen = %Ugen{
-        osc: :sin,
-        freq: 4,
-        phase: 0,
-        mul: 0.2,
-        add: 0.4,
-        lfo: false
-      }
+      ugen = %SinOsc{freq: 4, phase: 0, mul: 0.2, add: 0.4, lfo: false}
+      result = %SinOsc{freq: 4, phase: 0.6, mul: 0.2, add: 0.4, lfo: false}
 
-      ugen_with_phase = ugen |> Supex.phase(0.6)
-
-      assert ugen_with_phase.sc_command == "SinOsc.ar(freq: 4, phase: 0.6, mul: 0.2, add: 0.4);"
+      assert ugen |> Supex.phase(0.6) == result
     end
   end
 
-  describe "name/2" do
-    test "gets the oscillator as an LFO SuperCollider's command" do
-      ugen = %Ugen{
-        osc: :sin,
-        freq: 4,
-        phase: 0,
-        mul: 0.2,
-        add: 0.4,
-        lfo: false
-      }
+  describe "play/1" do
+    test "returns a %Sclang{} struct" do
+      {:ok, _pid} = start_supervised(Sclang)
+      # wait for sc server to boot
+      Process.sleep(4000)
 
-      ugen_with_name = ugen |> Supex.name("z")
+      ugen = %SinOsc{freq: 4, phase: 0, mul: 0.2, add: 0.4, lfo: false}
+      assert %Sclang{} = Supex.play(ugen)
+    end
+  end
 
-      assert ugen_with_name.sc_name == "z"
+  describe "play/2" do
+    test "returns a %Sclang{} struct with name in the executed command" do
+      {:ok, _pid} = start_supervised(Sclang)
+      # wait for sc server to boot
+      Process.sleep(4000)
+
+      ugen = %SinOsc{freq: 4, phase: 0, mul: 0.2, add: 0.4, lfo: false}
+      assert %Sclang{last_command_executed: command} = Supex.play(ugen, "z")
+      assert command =~ "z = "
+    end
+  end
+
+  describe "stop/0" do
+    test "stops all playing sounds" do
+      {:ok, _pid} = start_supervised(Sclang)
+      # wait for sc server to boot
+      Process.sleep(4000)
+
+      assert %Sclang{} = Supex.stop()
     end
   end
 end

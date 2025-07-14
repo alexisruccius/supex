@@ -1,5 +1,5 @@
 defmodule Supex.Sclang.PanTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   alias Supex.Pan
   alias Supex.Ugen

@@ -52,7 +52,7 @@ defmodule Supex.SclangTest do
       sc_command = "{ SinOsc.ar(freq: 369, phase: 0, mul: 0.1, add: 0); }.play"
       result = Sclang.execute(sc_command)
 
-      assert %Supex.Sclang{port: _, sc_server_booted: true} = result
+      assert %Sclang{port: _, sc_server_booted: true} = result
     end
   end
 
@@ -73,7 +73,12 @@ defmodule Supex.SclangTest do
       {:ok, _pid} = start_supervised(Sclang)
       # wait for sc server to boot
       Process.sleep(4000)
-      assert Sclang.stop_playing() == :ok
+
+      assert %Sclang{
+               port: _port,
+               sc_server_booted: true,
+               last_command_executed: "s.freeAll\n"
+             } = Sclang.stop_playing()
     end
   end
 

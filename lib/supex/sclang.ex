@@ -7,10 +7,11 @@ defmodule Supex.Sclang do
   use GenServer
   require Logger
 
+  alias Supex.Sclang
   alias Supex.Sclang.ScPort
   alias Supex.Sclang.ScServer
 
-  defstruct port: nil, sc_server_booted: false
+  defstruct port: nil, sc_server_booted: false, last_command_executed: ""
 
   @doc """
   Starts `sclang` via a port,
@@ -21,11 +22,11 @@ defmodule Supex.Sclang do
   def start_link(_init_arg), do: GenServer.start_link(__MODULE__, %__MODULE__{}, name: __MODULE__)
 
   @doc since: "0.1.0"
-  @spec stop_playing() :: :ok
-  def stop_playing(), do: GenServer.cast(__MODULE__, :stop_playing)
+  @spec stop_playing() :: %Sclang{}
+  def stop_playing(), do: ScServer.stop_playing() |> execute()
 
   @doc since: "0.1.0"
-  @spec execute(binary()) :: :ok
+  @spec execute(binary()) :: %Sclang{}
   def execute(sc_command) when is_binary(sc_command) do
     try do
       case GenServer.call(__MODULE__, {:execute, sc_command}) do
@@ -55,15 +56,9 @@ defmodule Supex.Sclang do
   @impl true
   def handle_call({:execute, sc_command}, _from, %__MODULE__{} = sclang) do
     %__MODULE__{port: port} = sclang
-    sc_command |> ScPort.send_sc_command(port)
-    {:reply, sclang, sclang}
-  end
-
-  @impl true
-  def handle_cast(:stop_playing, %__MODULE__{} = sclang) do
-    %__MODULE__{port: port} = sclang
-    ScServer.stop_playing() |> ScPort.send_sc_command(port)
-    {:noreply, sclang}
+    {_port, {:command, command}} = sc_command |> ScPort.send_sc_command(port)
+    sclang_new = sclang |> struct!(last_command_executed: command)
+    {:reply, sclang_new, sclang_new}
   end
 
   @impl true
@@ -106,7 +101,7 @@ defmodule Supex.Sclang do
 
   defp warning_sclang_not_started() do
     Logger.warning("""
-    Sclang Server not started! (Therefor no sound...)
+    Sclang Server not started! (Therefore no sound...)
     -> Start Sclang server with `Supex.Sclang.start_link(:ok)` or in your supervision tree with `Supex.Sclang`.
     """)
   end
