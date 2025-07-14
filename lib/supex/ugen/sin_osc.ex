@@ -34,7 +34,7 @@ defmodule Supex.Ugen.SinOsc do
     "SinOsc.ar(freq: #{freq}, phase: #{phase}, mul: #{mul}, add: #{add});" |> check_lfo(lfo)
   end
 
-  # `kr` (control rate) instead of `ar`(audio rate) for LFOs
+  # `kr` (control rate) instead of `ar`(audio rate) for LFO usage
   defp check_lfo(sc_command, lfo) when lfo, do: sc_command |> String.replace("ar(", "kr(")
   defp check_lfo(sc_command, _lfo), do: sc_command
 end

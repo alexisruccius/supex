@@ -26,7 +26,9 @@ defmodule Supex.Command do
   you can also use more than one char for variables.
   These will be declared as SuperCollider's environmental vars.
   """
-  def play(sc_command, name) when byte_size(name) == 1, do: name <> " = { " <> sc_command <> " }.play"
+  def play(sc_command, name) when byte_size(name) == 1,
+    do: name <> " = { " <> sc_command <> " }.play"
+
   def play(sc_command, name), do: "~" <> name <> " = { " <> sc_command <> " }.play"
 
   @doc """

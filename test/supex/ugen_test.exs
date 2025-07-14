@@ -20,7 +20,7 @@ defmodule Supex.UgenTest do
     end
 
     test "generic oscillator composing a PULSE (Square) wave oscillator" do
-      ugen = %Pulse{freq: 440, width: 0, mul: 0.1, add: 0}
+      ugen = %Pulse{freq: 440, width: 0.5, mul: 0.2, add: 0}
       assert ugen == Ugen.pulse()
     end
   end

@@ -263,7 +263,6 @@ defmodule Supex do
     sc_command |> Pan.center() |> Command.play(name) |> Sclang.execute()
   end
 
-
   @doc since: "0.2.0"
   @spec stop() :: %Sclang{}
   def stop(), do: Sclang.stop_playing()

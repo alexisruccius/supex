@@ -75,7 +75,9 @@ defmodule Supex.CommandTest do
     test "can handle more than one char for naming (SuperCollider's single global vars and environmental vars)" do
       sc_command = "SinOsc.ar(freq: 12, phase: 0, mul: 0.1, add: 0);"
       result_single = "z = { SinOsc.ar(freq: 12, phase: 0, mul: 0.1, add: 0); }.play"
-      result_more_chars = "~space_sound = { SinOsc.ar(freq: 12, phase: 0, mul: 0.1, add: 0); }.play"
+
+      result_more_chars =
+        "~space_sound = { SinOsc.ar(freq: 12, phase: 0, mul: 0.1, add: 0); }.play"
 
       assert Command.play(sc_command, "z") == result_single
       assert Command.play(sc_command, "space_sound") == result_more_chars

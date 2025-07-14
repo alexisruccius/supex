@@ -4,8 +4,8 @@ defmodule Supex.Ugen.PulseTest do
   alias Supex.Ugen.Pulse
 
   describe "%Pulse{} struct" do
-    test "returns default %SinOsc{} struct" do
-      assert %Pulse{freq: 440, width: 0, mul: 0.1, add: 0} = %Pulse{}
+    test "returns default %Pulse{} struct" do
+      assert %Pulse{freq: 440, width: 0.5, mul: 0.2, add: 0} = %Pulse{}
     end
   end
 
