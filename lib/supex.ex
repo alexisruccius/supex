@@ -66,7 +66,7 @@ defmodule Supex do
 
   ```elixir
   iex> import Supex
-  iex> pulse |> freq("SinOsc.kr(0.4).range(169, 269)") |> width("SinOsc.kr(6.9).range(0.01, 0.8)")|> mul(0.3) |> pan |> play
+  iex> pulse |> freq(saw |> freq(0.1) |> mul(100) |> add(100) |> lfo) |> width(sin |> freq(6) |> mul(0.5) |> add(0.5) |> lfo) |> pan |> play
   iex> stop("x")
   # or stop all
   iex> stop
@@ -149,13 +149,17 @@ defmodule Supex do
 
   Modulate the volume of a sine wave with another sine wave as an LFO:
 
-    iex> import Supex
-    iex> sin |> mul(osc |> freq(3) |> mul(0.5) |> add(0.5) |> lfo) |> play
-    iex> sin |> stop
+  ```elixir
+  iex> import Supex
+  iex> sin |> mul(osc |> freq(3) |> mul(0.5) |> add(0.5) |> lfo) |> pan |> play
+  iex> stop
+  ```
 
     or
 
-    iex> pulse |> mul(sin|>freq(2)|>mul(0.4)|>add(0.5)|>lfo) |> freq(saw|>freq(0.2)|>mul(100)|>add(100)|>lfo) |> play
+  ```elixir
+  iex> pulse |> mul(sin |> freq(2) |> mul(0.4) |> add(0.5) |> lfo) |> freq(saw |> freq(0.2) |> mul(100) |> add(100) |> lfo) |> pan |> play
+  ```
   """
   @doc since: "0.1.0"
   @spec lfo(struct()) :: struct()
@@ -211,6 +215,12 @@ defmodule Supex do
   @spec synth(binary()) :: binary()
   defdelegate synth(name), to: Synth, as: :define
 
+  @doc """
+  Pans the mono signal in the stereo spectrum.
+
+  Defaults to centering the signal.
+  """
+  @doc since: "0.2.0"
   @spec pan(struct()) :: struct()
   defdelegate pan(ugen), to: Ugen
 
@@ -222,8 +232,8 @@ defmodule Supex do
 
   ## example
 
-    iex> import Supex
-    iex> sin |> freq(269) |> play
+      iex> import Supex
+      iex> sin |> freq(269) |> play
   """
   @doc since: "0.1.0"
   @spec play(struct() | binary()) :: %Sclang{}
@@ -246,13 +256,13 @@ defmodule Supex do
 
   ## example
 
-    iex> import Supex
-    iex> sin |> freq(269) |> pan |> play("y")
-    iex> stop("y")
+      iex> import Supex
+      iex> sin |> freq(269) |> pan |> play("y")
+      iex> stop("y")
 
-    iex> import Supex
-    iex> pulse |> freq(269) |> pan |> play("sound")
-    iex> stop("sound")
+      iex> import Supex
+      iex> pulse |> freq(269) |> pan |> play("sound")
+      iex> stop("sound")
   """
   @doc since: "0.2.0"
   @spec play(struct() | binary(), binary()) :: %Sclang{}
@@ -274,7 +284,7 @@ defmodule Supex do
 
   ## example
 
-    iex> stop("x")
+      iex> stop("x")
   """
   @doc since: "0.1.0"
   @spec stop(binary()) :: %Sclang{}

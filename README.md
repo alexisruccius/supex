@@ -3,7 +3,7 @@
 Supex = SuperCollider + Elixir
 
 An Elixir wrapper for the music live-coding language SuperCollider.
-Supex communicates with SuperCollider’s `sclang` tool, letting you generate and control sound directly from Elixir.
+Supex communicates with SuperCollider's `sclang` tool, letting you generate and control sound directly from Elixir.
 
 - 🎧 Play basic oscillators with a clean, pipeable syntax
 - 🔤 Send raw SuperCollider code when needed
@@ -13,6 +13,7 @@ Built for musicians, coders, and live performers who want to use Elixir for audi
 
 👉 Requires `sclang` installed (`sudo apt install sclang` on Linux)
 
+
 ## Installation
 
 The package can be installed by adding `supex` to your list of dependencies in `mix.exs`:
@@ -20,7 +21,7 @@ The package can be installed by adding `supex` to your list of dependencies in `
 ```elixir
 def deps do
 [
-  {:supex, "~> 0.1.1"}
+  {:supex, "~> 0.1.0"}
 ]
 end
 ```
@@ -41,41 +42,47 @@ iex> Supex.Sclang.start_link(:ok)
 
 ## 💡 Examples
 
-️▶ Play a sine oscillator at 269 Hz and name it "y"; then stop it:
+▶ Play a sine oscillator at 269 Hz and name it "y", pan to center; then stop it:
 
 ```elixir
 iex> import Supex
-iex> osc |> freq(269) |> play
-iex> osc |> stop
-# or
-iex> stop_playing
+iex> sin |> freq(269) |> pan |> play("y")
+iex> stop("y")
+# or stop all
+iex> stop
 ```
 
 ▶ Modulate volume of a sine wave using another sine as LFO:
 
 ```elixir
 iex> import Supex
-iex> osc |> mul(osc |> freq(2) |> mul(0.4) |> add(0.5) |> lfo) |> play
-iex> osc |> stop
+iex> sin |> mul(sin |> freq(2) |> mul(0.4) |> add(0.5) |> lfo) |> pan |> play
+iex> sin |> stop
+# or stop all
+iex> stop
 ```
 
 ▶ Modulate a pulse wave's frequency and width:
 
 ```elixir
 iex> import Supex
-iex> osc(:pulse) |> freq("SinOsc.kr(0.4).range(169, 269)") |> width("SinOsc.kr(6.9).range(0.01, 0.8)")|> mul(0.3) |> play
-iex> osc |> stop
+iex> pulse |> freq(saw |> freq(0.1) |> mul(100) |> add(100) |> lfo) |> width(sin |> freq(6) |> mul(0.5) |> add(0.5) |> lfo) |> pan |> play
+iex> stop("x")
+# or stop all
+iex> stop
 ```
 
 🔤 Send a raw SuperCollider expression:
 
 ```elixir
 iex> import Supex
-iex> "RLPF.ar(Pulse.ar([100, 250], 0.5, 0.1), XLine.kr(8000, 400, 5), 0.05)" |> play
-iex> osc |> stop
+iex> "RLPF.ar(Pulse.ar([100, 250], 0.5, 0.1), XLine.kr(8000, 400, 5), 0.05)" |> pan |> play
+iex> stop("x")
+# or stop all
+iex> stop
 ```
 
-## ⚠️ Disclaimer  
+## ⚠️ Disclaimer
 
 SuperCollider and Supex can produce loud, sudden sounds.
 Use volume control and a limiter to protect your ears.
@@ -85,4 +92,3 @@ Avoid hearing damage.
 
 Supex is in early development.
 Expect API changes.
-
