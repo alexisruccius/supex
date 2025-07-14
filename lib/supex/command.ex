@@ -22,14 +22,18 @@ defmodule Supex.Command do
   SuperCollider's command will be refrenced with the given name.
   You can stop playing it with this name `stop("<name>")`
 
-  SuperCollider only excepts single chars, like "y", "i"...
+  Although SuperCollider only excepts single chars as global vars, like "y", "i",
+  you can also use more than one char for variables.
+  These will be declared as SuperCollider's environmental vars.
   """
-  def play(sc_command, name), do: name <> " = { " <> sc_command <> " }.play"
+  def play(sc_command, name) when byte_size(name) == 1, do: name <> " = { " <> sc_command <> " }.play"
+  def play(sc_command, name), do: "~" <> name <> " = { " <> sc_command <> " }.play"
 
   @doc """
   Command for stopping sound playing referenced by name.
   """
-  def stop(name), do: name <> ".free\n"
+  def stop(name) when byte_size(name) == 1, do: name <> ".free\n"
+  def stop(name), do: "~" <> name <> ".free\n"
 
   defp to_sc_command(ugen) when is_struct(ugen) do
     struct_module = ugen.__struct__

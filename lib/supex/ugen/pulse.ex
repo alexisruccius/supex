@@ -13,7 +13,7 @@ defmodule Supex.Ugen.Pulse do
 
   `add` this value will be added to the output.
   """
-  defstruct freq: 440, width: 0, mul: 0.1, add: 0, lfo: false
+  defstruct freq: 440, width: 0.5, mul: 0.2, add: 0, lfo: false
 
   @doc """
   Builds the SuperCollider command from the `%Pulse{}` struct.

@@ -1,6 +1,7 @@
 defmodule SupexTest do
   use ExUnit.Case, async: true
 
+  alias Supex.Sclang
   alias Supex.Ugen.SinOsc
 
   describe "osc/0" do
@@ -32,9 +33,36 @@ defmodule SupexTest do
     end
   end
 
+  describe "play/1" do
+    test "returns a %Sclang{} struct" do
+      {:ok, _pid} = start_supervised(Sclang)
+      # wait for sc server to boot
+      Process.sleep(4000)
+
+      ugen = %SinOsc{freq: 4, phase: 0, mul: 0.2, add: 0.4, lfo: false}
+      assert %Sclang{} = Supex.play(ugen)
+    end
+  end
+
+  describe "play/2" do
+    test "returns a %Sclang{} struct with name in the executed command" do
+      {:ok, _pid} = start_supervised(Sclang)
+      # wait for sc server to boot
+      Process.sleep(4000)
+
+      ugen = %SinOsc{freq: 4, phase: 0, mul: 0.2, add: 0.4, lfo: false}
+      assert %Sclang{last_command_executed: command} = Supex.play(ugen, "z")
+      assert command =~ "z = "
+    end
+  end
+
   describe "stop/0" do
     test "stops all playing sounds" do
-      assert Supex.stop() == :ok
+      {:ok, _pid} = start_supervised(Sclang)
+      # wait for sc server to boot
+      Process.sleep(4000)
+
+      assert %Sclang{} = Supex.stop()
     end
   end
 end

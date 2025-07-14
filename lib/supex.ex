@@ -46,7 +46,7 @@ defmodule Supex do
 
   ```elixir
   iex> import Supex
-  iex> osc |> freq(269) |> play("y")
+  iex> sin |> freq(269) |> play("y")
   iex> stop("y")
   # or stop all
   iex> stop
@@ -56,8 +56,8 @@ defmodule Supex do
 
   ```elixir
   iex> import Supex
-  iex> osc |> mul(osc |> freq(2) |> mul(0.4) |> add(0.5) |> lfo) |> play
-  iex> osc |> stop
+  iex> sin |> mul(sin |> freq(2) |> mul(0.4) |> add(0.5) |> lfo) |> play
+  iex> sin |> stop
   # or stop all
   iex> stop
   ```
@@ -66,7 +66,7 @@ defmodule Supex do
 
   ```elixir
   iex> import Supex
-  iex> osc(:pulse) |> freq("SinOsc.kr(0.4).range(169, 269)") |> width("SinOsc.kr(6.9).range(0.01, 0.8)")|> mul(0.3) |> play
+  iex> pulse |> freq("SinOsc.kr(0.4).range(169, 269)") |> width("SinOsc.kr(6.9).range(0.01, 0.8)")|> mul(0.3) |> play
   iex> stop("x")
   # or stop all
   iex> stop
@@ -159,12 +159,12 @@ defmodule Supex do
   Modulate the volume of a sine wave with another sine wave as an LFO:
 
     iex> import SC
-    iex> osc |> mul(osc |> freq(3) |> mul(0.5) |> add(0.5) |> lfo) |> play
-    iex> osc |> stop
+    iex> sin |> mul(osc |> freq(3) |> mul(0.5) |> add(0.5) |> lfo) |> play
+    iex> sin |> stop
 
     or
 
-    iex> osc(:pulse) |> mul(osc|>freq(2)|>mul(0.4)|>add(0.5)|>lfo) |> freq(osc(:saw)|>freq(0.2)|>mul(100)|>add(100)|>lfo) |> play
+    iex> pulse |> mul(sin|>freq(2)|>mul(0.4)|>add(0.5)|>lfo) |> freq(saw|>freq(0.2)|>mul(100)|>add(100)|>lfo) |> play
   """
   @doc since: "0.1.0"
   @spec lfo(struct()) :: struct()
@@ -226,7 +226,7 @@ defmodule Supex do
   ## example
 
     iex> import SC
-    iex> osc |> freq(269) |> play
+    iex> sin |> freq(269) |> play
   """
   @doc since: "0.1.0"
   @spec play(struct() | binary()) :: %Sclang{}
@@ -236,6 +236,33 @@ defmodule Supex do
   def play(sc_command) when is_binary(sc_command) do
     sc_command |> Pan.center() |> Command.play() |> Sclang.execute()
   end
+
+  @doc """
+  Play the composed oscillator, or a raw SuperCollider's command (as a string),
+  and naming it for referencing.
+
+  SuperCollider's command will be refrenced with the given name.
+  You can stop playing it with this name `stop("<name>")`
+
+  SuperCollider only excepts Single-Letter Variables, single chars, like "y", "i";
+  they are global variables that SuperCollider has defined already.
+  So they can be used to refering to the command.
+
+  ## example
+
+    iex> import SC
+    iex> sin |> freq(269) |> play("y")
+    iex> stop("y")
+  """
+  @doc since: "0.2.0"
+  @spec play(struct() | binary(), binary()) :: %Sclang{}
+  def play(ugen, name) when is_struct(ugen), do: ugen |> Command.build() |> play(name)
+
+  @doc since: "0.2.0"
+  def play(sc_command, name) when is_binary(sc_command) do
+    sc_command |> Pan.center() |> Command.play(name) |> Sclang.execute()
+  end
+
 
   @doc since: "0.2.0"
   @spec stop() :: %Sclang{}

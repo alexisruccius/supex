@@ -71,11 +71,24 @@ defmodule Supex.CommandTest do
       result = "y = { SinOsc.ar(freq: 12, phase: 0, mul: 0.1, add: 0); }.play"
       assert Command.play(sc_command, "y") == result
     end
+
+    test "can handle more than one char for naming (SuperCollider's single global vars and environmental vars)" do
+      sc_command = "SinOsc.ar(freq: 12, phase: 0, mul: 0.1, add: 0);"
+      result_single = "z = { SinOsc.ar(freq: 12, phase: 0, mul: 0.1, add: 0); }.play"
+      result_more_chars = "~space_sound = { SinOsc.ar(freq: 12, phase: 0, mul: 0.1, add: 0); }.play"
+
+      assert Command.play(sc_command, "z") == result_single
+      assert Command.play(sc_command, "space_sound") == result_more_chars
+    end
   end
 
   describe "stop/1" do
     test "command for stopping the sound referanced by name" do
       assert Command.stop("y") == "y.free\n"
+    end
+
+    test "can handle more than one char for naming (SuperCollider's single global vars and environmental vars)" do
+      assert Command.stop("space_sound") == "~space_sound.free\n"
     end
   end
 end
