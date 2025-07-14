@@ -8,9 +8,10 @@ defmodule Supex.Ugen do
   iex> sin() |> freq(690) |> phase(6) |> mul(0.9) |> add(0.69)
   %Supex.Ugen.SinOsc{add: 0.69, phase: 6, freq: 690, mul: 0.9}
   """
+  alias Supex.Ugen.Pan2
+  alias Supex.Ugen.Pulse
   alias Supex.Ugen.Saw
   alias Supex.Ugen.SinOsc
-  alias Supex.Ugen.Pulse
 
   defstruct sc_command: "", sc_name: "x"
 
@@ -28,6 +29,17 @@ defmodule Supex.Ugen do
   Create a pulse oscillator.
   """
   def pulse(), do: %Pulse{}
+
+  @spec pan(struct()) :: %Pan2{}
+  def pan(ugen), do: %Pan2{in: ugen}
+
+  @doc since: "0.2.0"
+  @spec pos(struct(), integer() | float() | binary() | struct()) :: struct()
+  def pos(ugen, pos), do: ugen |> struct!(pos: pos)
+
+  @doc since: "0.2.0"
+  @spec level(struct(), integer() | float() | binary() | struct()) :: struct()
+  def level(ugen, level), do: ugen |> struct!(level: level)
 
   @doc """
   Transforms a "normal" oscillator to a LFO.

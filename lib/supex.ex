@@ -3,7 +3,7 @@ defmodule Supex do
   Supex = SuperCollider + Elixir
 
   An Elixir wrapper for the music live-coding language SuperCollider.
-  Supex communicates with SuperCollider’s `sclang` tool, letting you generate and control sound directly from Elixir.
+  Supex communicates with SuperCollider's `sclang` tool, letting you generate and control sound directly from Elixir.
 
   - 🎧 Play basic oscillators with a clean, pipeable syntax
   - 🔤 Send raw SuperCollider code when needed
@@ -42,11 +42,11 @@ defmodule Supex do
 
   ## 💡 Examples
 
-  ️▶ Play a sine oscillator at 269 Hz and name it "y"; then stop it:
+  ▶ Play a sine oscillator at 269 Hz and name it "y", pan to center; then stop it:
 
   ```elixir
   iex> import Supex
-  iex> sin |> freq(269) |> play("y")
+  iex> sin |> freq(269) |> pan |> play("y")
   iex> stop("y")
   # or stop all
   iex> stop
@@ -56,7 +56,7 @@ defmodule Supex do
 
   ```elixir
   iex> import Supex
-  iex> sin |> mul(sin |> freq(2) |> mul(0.4) |> add(0.5) |> lfo) |> play
+  iex> sin |> mul(sin |> freq(2) |> mul(0.4) |> add(0.5) |> lfo) |> pan |> play
   iex> sin |> stop
   # or stop all
   iex> stop
@@ -66,7 +66,7 @@ defmodule Supex do
 
   ```elixir
   iex> import Supex
-  iex> pulse |> freq("SinOsc.kr(0.4).range(169, 269)") |> width("SinOsc.kr(6.9).range(0.01, 0.8)")|> mul(0.3) |> play
+  iex> pulse |> freq(saw |> freq(0.1) |> mul(100) |> add(100) |> lfo) |> width(sin |> freq(6) |> mul(0.5) |> add(0.5) |> lfo) |> pan |> play
   iex> stop("x")
   # or stop all
   iex> stop
@@ -76,7 +76,7 @@ defmodule Supex do
 
   ```elixir
   iex> import Supex
-  iex> "RLPF.ar(Pulse.ar([100, 250], 0.5, 0.1), XLine.kr(8000, 400, 5), 0.05)" |> play
+  iex> "RLPF.ar(Pulse.ar([100, 250], 0.5, 0.1), XLine.kr(8000, 400, 5), 0.05)" |> pan |> play
   iex> stop("x")
   # or stop all
   iex> stop
@@ -95,21 +95,12 @@ defmodule Supex do
   """
 
   alias Supex.Command
-  alias Supex.Pan
   alias Supex.Synth
   alias Supex.Sclang
   alias Supex.Ugen
 
-  defstruct ugen: nil
-
-  # def to_sc_command(%Supex{} = supex) do
-  #  %Supex{ugen: ugen} = supex
-
-  #  ugen |> Ugen.to_sc_command()
-  # end
-
   @doc """
-  Create a oscillator.
+  Create an oscillator.
   `type` can be:
 
     `:sin` (sinus wave)
@@ -158,13 +149,17 @@ defmodule Supex do
 
   Modulate the volume of a sine wave with another sine wave as an LFO:
 
-    iex> import SC
-    iex> sin |> mul(osc |> freq(3) |> mul(0.5) |> add(0.5) |> lfo) |> play
-    iex> sin |> stop
+  ```elixir
+  iex> import Supex
+  iex> sin |> mul(osc |> freq(3) |> mul(0.5) |> add(0.5) |> lfo) |> pan |> play
+  iex> stop
+  ```
 
     or
 
-    iex> pulse |> mul(sin|>freq(2)|>mul(0.4)|>add(0.5)|>lfo) |> freq(saw|>freq(0.2)|>mul(100)|>add(100)|>lfo) |> play
+  ```elixir
+  iex> pulse |> mul(sin |> freq(2) |> mul(0.4) |> add(0.5) |> lfo) |> freq(saw |> freq(0.2) |> mul(100) |> add(100) |> lfo) |> pan |> play
+  ```
   """
   @doc since: "0.1.0"
   @spec lfo(struct()) :: struct()
@@ -180,7 +175,7 @@ defmodule Supex do
   defdelegate freq(ugen, freq), to: Ugen
 
   @doc """
-  The pulse width of an pulse wave oscillator.
+  The pulse width of a pulse wave oscillator.
 
   `width` should be a value between `0.01` and `0.99`.
   """
@@ -198,7 +193,7 @@ defmodule Supex do
   @doc """
   Multiplication of the signal.
 
-  Chose values between `0.1` and `1` for not hurting your ears.
+  Choose values between `0.1` and `1` for not hurting your ears.
   """
   @doc since: "0.1.0"
   @spec mul(struct(), integer() | float() | binary() | struct()) :: struct()
@@ -221,12 +216,56 @@ defmodule Supex do
   defdelegate synth(name), to: Synth, as: :define
 
   @doc """
-  Play the composed oscillator, or a raw SuperCollider's command (as a string).
+  Pans the mono signal in the stereo spectrum.
+
+  Defaults to centering the signal.
+
+  Use `pos/2` for panning the position (-1.0 = left, 0 = center, 1.0 = right).
+
+  Use `level/2` for scaling the output level.
 
   ## example
 
-    iex> import SC
-    iex> sin |> freq(269) |> play
+  iex> sin |> freq(269) |> pan |> pos(0.69) |> play
+  """
+  @doc since: "0.2.0"
+  @spec pan(struct()) :: struct()
+  defdelegate pan(ugen), to: Ugen
+
+  @doc """
+  Pan position -1.0 = left, 0 = center, 1.0 = right
+
+  ## example
+
+  Pan a sound slightly to the right:
+
+      iex> sin |> freq(269) |> pan |> pos(0.69) |> play
+  """
+  @doc since: "0.2.0"
+  @spec pos(struct(), integer() | float() | binary() | struct()) :: struct()
+  defdelegate pos(ugen, pos), to: Ugen
+
+  @doc """
+  Sets the output level.
+
+  ## example
+
+      iex> sin |> freq(269) |> pan |> level(0.5) |> play
+  """
+  @doc since: "0.2.0"
+  @spec level(struct(), integer() | float() | binary() | struct()) :: struct()
+  defdelegate level(ugen, pos), to: Ugen
+
+  @doc """
+  Play the composed oscillator, or a raw SuperCollider's command (as a string).
+
+  By default, the SuperCollider command will be referenced with the variable "x".
+  For example, you can stop playing it with `stop("x")`
+
+  ## example
+
+      iex> import Supex
+      iex> sin |> freq(269) |> play
   """
   @doc since: "0.1.0"
   @spec play(struct() | binary()) :: %Sclang{}
@@ -234,33 +273,38 @@ defmodule Supex do
 
   @doc since: "0.1.0"
   def play(sc_command) when is_binary(sc_command) do
-    sc_command |> Pan.center() |> Command.play() |> Sclang.execute()
+    sc_command |> Command.play() |> Sclang.execute()
   end
 
   @doc """
   Play the composed oscillator, or a raw SuperCollider's command (as a string),
   and naming it for referencing.
 
-  SuperCollider's command will be refrenced with the given name.
-  You can stop playing it with this name `stop("<name>")`
+  The SuperCollider command will be referenced with the given name.
+  You can stop it using `stop("<name>")`.
 
-  SuperCollider only excepts Single-Letter Variables, single chars, like "y", "i";
-  they are global variables that SuperCollider has defined already.
-  So they can be used to refering to the command.
+  While SuperCollider only accepts single characters as global variables (e.g., "y", "i"),
+  longer names can be used as environment variables and will be declared accordingly.
 
   ## example
 
-    iex> import SC
-    iex> sin |> freq(269) |> play("y")
-    iex> stop("y")
+      iex> import Supex
+      iex> sin |> freq(269) |> pan |> play("y")
+      iex> stop("y")
+
+      iex> import Supex
+      iex> pulse |> freq(269) |> pan |> play("sound")
+      iex> stop("sound")
   """
   @doc since: "0.2.0"
   @spec play(struct() | binary(), binary()) :: %Sclang{}
-  def play(ugen, name) when is_struct(ugen), do: ugen |> Command.build() |> play(name)
+  def play(ugen, name) when is_struct(ugen) and is_binary(name) do
+    ugen |> Command.build() |> play(name)
+  end
 
   @doc since: "0.2.0"
-  def play(sc_command, name) when is_binary(sc_command) do
-    sc_command |> Pan.center() |> Command.play(name) |> Sclang.execute()
+  def play(sc_command, name) when is_binary(sc_command) and is_binary(name) do
+    sc_command |> Command.play(name) |> Sclang.execute()
   end
 
   @doc since: "0.2.0"
@@ -268,29 +312,28 @@ defmodule Supex do
   def stop(), do: Sclang.stop_playing()
 
   @doc """
-  Stop playing a sc_command with name reference.
+  Stop playing a SuperCollider command by name.
 
   ## example
 
-    iex> import SC
-    iex> stop("x")
+      iex> stop("x")
   """
   @doc since: "0.1.0"
-  @spec stop(binary()) :: struct()
-  def stop(name), do: Command.stop(name) |> Sclang.execute()
+  @spec stop(binary()) :: %Sclang{}
+  def stop(name) when is_binary(name), do: Command.stop(name) |> Sclang.execute()
 
   @doc "Stops all sound playing."
   @doc since: "0.1.0"
   @deprecated "Use Supex.stop/0 instead"
-  @spec stop_playing() :: struct()
+  @spec stop_playing() :: %Sclang{}
   defdelegate stop_playing(), to: Sclang
 
   @doc """
-  Executes a raw SuperCollider's command on the `sclang` server.
+  Executes a raw SuperCollider command on the `sclang` server.
 
   Must be a string.
   """
   @doc since: "0.1.0"
-  @spec execute(binary()) :: struct()
+  @spec execute(binary()) :: %Sclang{}
   defdelegate execute(sc_command), to: Sclang
 end

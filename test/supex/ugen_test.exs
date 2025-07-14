@@ -4,6 +4,7 @@ defmodule Supex.UgenTest do
   doctest Supex.Ugen
 
   alias Supex.Ugen
+  alias Supex.Ugen.Pan2
   alias Supex.Ugen.Pulse
   alias Supex.Ugen.Saw
   alias Supex.Ugen.SinOsc
@@ -73,6 +74,38 @@ defmodule Supex.UgenTest do
       ugen = %Saw{freq: 5, mul: 0.1, add: 0, lfo: false}
       result = %Saw{freq: 5, mul: 0.1, add: 0, lfo: true}
       assert ugen |> Ugen.lfo() == result
+    end
+  end
+
+  describe "pan/1" do
+    test "wrappes a ugen, like a %SinOsc{} struct, as input in %Pan2{} struct" do
+      ugen = %SinOsc{freq: 4, phase: 0, mul: 0.2, add: 0.4, lfo: false}
+
+      result = %Pan2{
+        in: %SinOsc{freq: 4, phase: 0, mul: 0.2, add: 0.4, lfo: false},
+        pos: 0,
+        level: 1
+      }
+
+      assert ugen |> Ugen.pan() == result
+    end
+  end
+
+  describe "pos/2" do
+    test "sets the position for the %Pan2{}" do
+      ugen = %Pan2{in: "SinOsc.ar(440)", pos: 0, level: 1}
+      result = %Pan2{in: "SinOsc.ar(440)", pos: 0.69, level: 1}
+
+      assert ugen |> Ugen.pos(0.69) == result
+    end
+  end
+
+  describe "level/2" do
+    test "sets the level for the %Pan2{}" do
+      ugen = %Pan2{in: "SinOsc.ar(440)", pos: 0, level: 1}
+      result = %Pan2{in: "SinOsc.ar(440)", pos: 0, level: 0.69}
+
+      assert ugen |> Ugen.level(0.69) == result
     end
   end
 end

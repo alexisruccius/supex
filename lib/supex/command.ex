@@ -11,7 +11,7 @@ defmodule Supex.Command do
   @doc """
   Adding play to the sc_command.
 
-  SuperCollider's command will by default refrenced with the variable "x".
+  By default, the SuperCollider command will be referenced with the variable "x".
   For example, you can stop playing it with `stop("x")`
   """
   def play(sc_command), do: "x = { " <> sc_command <> " }.play"
@@ -19,12 +19,11 @@ defmodule Supex.Command do
   @doc """
   Adding play to the sc_command, and naming it for referencing.
 
-  SuperCollider's command will be refrenced with the given name.
-  You can stop playing it with this name `stop("<name>")`
+  The SuperCollider command will be referenced with the given name.
+  You can stop it using `stop("<name>")`.
 
-  Although SuperCollider only excepts single chars as global vars, like "y", "i",
-  you can also use more than one char for variables.
-  These will be declared as SuperCollider's environmental vars.
+  While SuperCollider only accepts single characters as global variables (e.g., "y", "i"),
+  longer names can be used as environment variables and will be declared accordingly.
   """
   def play(sc_command, name) when byte_size(name) == 1,
     do: name <> " = { " <> sc_command <> " }.play"
