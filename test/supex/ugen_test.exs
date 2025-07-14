@@ -90,4 +90,22 @@ defmodule Supex.UgenTest do
       assert ugen |> Ugen.pan() == result
     end
   end
+
+  describe "pos/2" do
+    test "sets the position for the %Pan2{}" do
+      ugen = %Pan2{in: "SinOsc.ar(440)", pos: 0, level: 1}
+      result = %Pan2{in: "SinOsc.ar(440)", pos: 0.69, level: 1}
+
+      assert ugen |> Ugen.pos(0.69) == result
+    end
+  end
+
+  describe "level/2" do
+    test "sets the level for the %Pan2{}" do
+      ugen = %Pan2{in: "SinOsc.ar(440)", pos: 0, level: 1}
+      result = %Pan2{in: "SinOsc.ar(440)", pos: 0, level: 0.69}
+
+      assert ugen |> Ugen.level(0.69) == result
+    end
+  end
 end

@@ -33,6 +33,14 @@ defmodule Supex.Ugen do
   @spec pan(struct()) :: %Pan2{}
   def pan(ugen), do: %Pan2{in: ugen}
 
+  @doc since: "0.2.0"
+  @spec pos(struct(), integer() | float() | binary() | struct()) :: struct()
+  def pos(ugen, pos), do: ugen |> struct!(pos: pos)
+
+  @doc since: "0.2.0"
+  @spec level(struct(), integer() | float() | binary() | struct()) :: struct()
+  def level(ugen, level), do: ugen |> struct!(level: level)
+
   @doc """
   Transforms a "normal" oscillator to a LFO.
 

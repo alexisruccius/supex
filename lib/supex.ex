@@ -219,10 +219,42 @@ defmodule Supex do
   Pans the mono signal in the stereo spectrum.
 
   Defaults to centering the signal.
+
+  Use `pos/2` for panning the position (-1.0 = left, 0 = center, 1.0 = right).
+
+  Use `level/2` for scaling the output level.
+
+  ## example
+
+  iex> sin |> freq(269) |> pan |> pos(0.69) |> play
   """
   @doc since: "0.2.0"
   @spec pan(struct()) :: struct()
   defdelegate pan(ugen), to: Ugen
+
+  @doc """
+  Pan position -1.0 = left, 0 = center, 1.0 = right
+
+  ## example
+
+  Pan a sound slightly to the right:
+
+      iex> sin |> freq(269) |> pan |> pos(0.69) |> play
+  """
+  @doc since: "0.2.0"
+  @spec pos(struct(), integer() | float() | binary() | struct()) :: struct()
+  defdelegate pos(ugen, pos), to: Ugen
+
+  @doc """
+  Sets the output level.
+
+  ## example
+
+      iex> sin |> freq(269) |> pan |> level(0.5) |> play
+  """
+  @doc since: "0.2.0"
+  @spec level(struct(), integer() | float() | binary() | struct()) :: struct()
+  defdelegate level(ugen, pos), to: Ugen
 
   @doc """
   Play the composed oscillator, or a raw SuperCollider's command (as a string).
