@@ -95,7 +95,6 @@ defmodule Supex do
   """
 
   alias Supex.Command
-  alias Supex.Pan
   alias Supex.Synth
   alias Supex.Sclang
   alias Supex.Ugen
@@ -220,6 +219,9 @@ defmodule Supex do
   @spec synth(binary()) :: binary()
   defdelegate synth(name), to: Synth, as: :define
 
+  @spec pan(struct()) :: struct()
+  defdelegate pan(ugen), to: Ugen
+
   @doc """
   Play the composed oscillator, or a raw SuperCollider's command (as a string).
 
@@ -234,7 +236,7 @@ defmodule Supex do
 
   @doc since: "0.1.0"
   def play(sc_command) when is_binary(sc_command) do
-    sc_command |> Pan.center() |> Command.play() |> Sclang.execute()
+    sc_command |> Command.play() |> Sclang.execute()
   end
 
   @doc """
@@ -260,7 +262,7 @@ defmodule Supex do
 
   @doc since: "0.2.0"
   def play(sc_command, name) when is_binary(sc_command) do
-    sc_command |> Pan.center() |> Command.play(name) |> Sclang.execute()
+    sc_command |> Command.play(name) |> Sclang.execute()
   end
 
   @doc since: "0.2.0"

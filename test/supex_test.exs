@@ -2,6 +2,7 @@ defmodule SupexTest do
   use ExUnit.Case, async: true
 
   alias Supex.Sclang
+  alias Supex.Ugen.Pan2
   alias Supex.Ugen.SinOsc
 
   describe "osc/0" do
@@ -30,6 +31,20 @@ defmodule SupexTest do
       result = %SinOsc{freq: 4, phase: 0.6, mul: 0.2, add: 0.4, lfo: false}
 
       assert ugen |> Supex.phase(0.6) == result
+    end
+  end
+
+  describe "pan/1" do
+    test "wrappes a ugen, like a %SinOsc{} struct, as input in %Pan2{} struct" do
+      ugen = %SinOsc{freq: 4, phase: 0, mul: 0.2, add: 0.4, lfo: false}
+
+      result = %Pan2{
+        in: %SinOsc{freq: 4, phase: 0, mul: 0.2, add: 0.4, lfo: false},
+        pos: 0,
+        level: 1
+      }
+
+      assert ugen |> Supex.pan() == result
     end
   end
 
