@@ -1,13 +1,29 @@
 defmodule SupexTest do
   use ExUnit.Case, async: true
 
+  doctest Supex
+
   alias Supex.Sclang
   alias Supex.Ugen.Pan2
+  alias Supex.Ugen.Pulse
+  alias Supex.Ugen.Saw
   alias Supex.Ugen.SinOsc
 
-  describe "osc/0" do
-    test "returns a %SinOsc sin oscillator" do
+  describe "sin/0" do
+    test "returns a %SinOsc{} sin oscillator" do
       assert %SinOsc{add: 0, phase: 0, freq: 440, mul: 0.1, lfo: false} = Supex.sin()
+    end
+  end
+
+  describe "saw/0" do
+    test "returns a %Saw{} saw oscillator" do
+      assert %Saw{add: 0, freq: 440, mul: 0.1, lfo: false} = Supex.saw()
+    end
+  end
+
+  describe "pulse/0" do
+    test "returns a %Pulse{} pulse oscillator" do
+      assert %Pulse{add: 0, freq: 440, mul: 0.2, lfo: false, width: 0.5} = Supex.pulse()
     end
   end
 
@@ -25,12 +41,48 @@ defmodule SupexTest do
     end
   end
 
+  describe "freq/2" do
+    test "sets the frequency of an oscillator" do
+      ugen = %Saw{freq: 4, mul: 0.3, add: 0.4, lfo: false}
+      result = %Saw{freq: 69, mul: 0.3, add: 0.4, lfo: false}
+
+      assert ugen |> Supex.freq(69) == result
+    end
+  end
+
   describe "phase/2" do
-    test "gets the oscillator as an LFO SuperCollider's command" do
+    test "sets the phase of a sin oscillator" do
       ugen = %SinOsc{freq: 4, phase: 0, mul: 0.2, add: 0.4, lfo: false}
       result = %SinOsc{freq: 4, phase: 0.6, mul: 0.2, add: 0.4, lfo: false}
 
       assert ugen |> Supex.phase(0.6) == result
+    end
+  end
+
+  describe "width/2" do
+    test "sets the width of a pulse oscillator" do
+      ugen = %Pulse{freq: 69, width: 0.3, mul: 0.3, add: 0.4, lfo: false}
+      result = %Pulse{freq: 69, width: 0.6, mul: 0.3, add: 0.4, lfo: false}
+
+      assert ugen |> Supex.width(0.6) == result
+    end
+  end
+
+  describe "mul/2" do
+    test "sets the mul of an oscillator" do
+      ugen = %Pulse{freq: 69, width: 0.6, mul: 0.1, add: 0.4, lfo: false}
+      result = %Pulse{freq: 69, width: 0.6, mul: 0.6, add: 0.4, lfo: false}
+
+      assert ugen |> Supex.mul(0.6) == result
+    end
+  end
+
+  describe "add/2" do
+    test "sets the add of an oscillator" do
+      ugen = %Pulse{freq: 69, width: 0.6, mul: 0.1, add: 0.4, lfo: false}
+      result = %Pulse{freq: 69, width: 0.6, mul: 0.1, add: 0.1, lfo: false}
+
+      assert ugen |> Supex.add(0.1) == result
     end
   end
 

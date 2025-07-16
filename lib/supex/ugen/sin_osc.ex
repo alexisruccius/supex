@@ -6,7 +6,7 @@ defmodule Supex.Ugen.SinOsc do
 
   Defines a `%SinOsc{}` struct with
 
-  `freq:` frequency in Hertz,
+  `freq` frequency in Hertz,
 
   `phase`	phase in radians (should be within the range +-8pi),
 
