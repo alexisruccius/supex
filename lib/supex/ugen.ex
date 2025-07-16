@@ -13,8 +13,6 @@ defmodule Supex.Ugen do
   alias Supex.Ugen.Saw
   alias Supex.Ugen.SinOsc
 
-  defstruct sc_command: "", sc_name: "x"
-
   @doc """
   Create a sine oscillator.
   """
