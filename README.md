@@ -13,7 +13,6 @@ Built for musicians, coders, and live performers who want to use Elixir for audi
 
 👉 Requires `sclang` installed (`sudo apt install sclang` on Linux)
 
-
 ## Installation
 
 The package can be installed by adding `supex` to your list of dependencies in `mix.exs`:
@@ -21,10 +20,15 @@ The package can be installed by adding `supex` to your list of dependencies in `
 ```elixir
 def deps do
 [
-  {:supex, "~> 0.1.0"}
+  {:supex, "~> 0.2.0"}
 ]
 end
 ```
+
+  > #### Note on v0.2.0 {: .note}
+  > The library is now fully refactored with a clear structure and consistent naming.  
+  > The sound naming issue in v0.1.0 has been fixed.
+
 
 ## 🔍 Learn SuperCollider basics
 
@@ -46,30 +50,24 @@ iex> Supex.Sclang.start_link(:ok)
 
 ```elixir
 iex> import Supex
-iex> sin |> freq(269) |> pan |> play("y")
+iex> sin() |> freq(369) |> pan |> play("y")
 iex> stop("y")
-# or stop all
-iex> stop
 ```
 
 ▶ Modulate volume of a sine wave using another sine as LFO:
 
 ```elixir
 iex> import Supex
-iex> sin |> mul(sin |> freq(2) |> mul(0.4) |> add(0.5) |> lfo) |> pan |> play
-iex> sin |> stop
-# or stop all
-iex> stop
+iex> sin() |> mul(sin() |> freq(2) |> mul(0.4) |> add(0.5) |> lfo) |> pan |> play
+iex> stop()
 ```
 
 ▶ Modulate a pulse wave's frequency and width:
 
 ```elixir
 iex> import Supex
-iex> pulse |> freq(saw |> freq(0.1) |> mul(100) |> add(100) |> lfo) |> width(sin |> freq(6) |> mul(0.5) |> add(0.5) |> lfo) |> pan |> play
-iex> stop("x")
-# or stop all
-iex> stop
+iex> pulse() |> freq(saw() |> freq(0.1) |> mul(100) |> add(100) |> lfo) |> width(sin() |> freq(6) |> mul(0.5) |> add(0.5) |> lfo) |> pan |> play
+iex> stop()
 ```
 
 🔤 Send a raw SuperCollider expression:
@@ -77,9 +75,14 @@ iex> stop
 ```elixir
 iex> import Supex
 iex> "RLPF.ar(Pulse.ar([100, 250], 0.5, 0.1), XLine.kr(8000, 400, 5), 0.05)" |> pan |> play
-iex> stop("x")
-# or stop all
-iex> stop
+iex> stop()
+```
+or
+
+```elixir
+iex> import Supex
+iex> execute("play{LFCub.ar(LFSaw.kr(LFPulse.kr(1/4,1/4,1/4)*2+2,1,-20,50))+(WhiteNoise.ar(LFPulse.kr(4,0,LFPulse.kr(1,3/4)/4+0.05))/8)!2}")
+iex> stop()
 ```
 
 ## ⚠️ Disclaimer
