@@ -21,10 +21,14 @@ defmodule Supex do
   ```elixir
   def deps do
   [
-    {:supex, "~> 0.1.0"}
+    {:supex, "~> 0.2.0"}
   ]
   end
   ```
+
+  > #### Note on v0.2.0 {: .note}
+  > The library is now fully refactored with a clear structure and consistent naming.
+  > The sound naming issue in v0.1.0 has been fixed.
 
   ## 🔍 Learn SuperCollider basics
 

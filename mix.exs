@@ -4,7 +4,7 @@ defmodule Supex.MixProject do
   def project do
     [
       app: :supex,
-      version: "0.1.1",
+      version: "0.2.0",
       description:
         "An Elixir wrapper for the music live-coding language SuperCollider. Supex communicates with SuperCollider’s `sclang` tool, letting you generate and control sound directly from Elixir.",
       elixir: "~> 1.18",
@@ -41,7 +41,7 @@ defmodule Supex.MixProject do
       # The main page in the docs
       main: "Supex",
       logo: "assets/supex-logo.jpg",
-      extras: ["README.md"]
+      extras: ["README.md", "CHANGELOG.md"]
     ]
   end
 
