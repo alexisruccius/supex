@@ -95,7 +95,6 @@ defmodule Supex do
   """
 
   alias Supex.Command
-  alias Supex.Synth
   alias Supex.Sclang
   alias Supex.Ugen
 
@@ -207,13 +206,6 @@ defmodule Supex do
   @doc since: "0.1.0"
   @spec add(struct(), integer() | float() | binary() | struct()) :: struct()
   defdelegate add(ugen, add), to: Ugen
-
-  @doc """
-  A synth definition.
-  """
-  @doc since: "0.1.0"
-  @spec synth(binary()) :: binary()
-  defdelegate synth(name), to: Synth, as: :define
 
   @doc """
   Pans the mono signal in the stereo spectrum.
