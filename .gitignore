@@ -28,3 +28,6 @@ supex-*.tar
 # xref files
 xref*
 
+# vscode
+.vscode/
+
