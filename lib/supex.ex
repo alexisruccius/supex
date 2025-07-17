@@ -1,5 +1,11 @@
 defmodule Supex do
   @moduledoc """
+  [![Hex.pm](https://img.shields.io/hexpm/v/supex.svg)](https://hex.pm/packages/supex)
+  [![API docs](https://img.shields.io/hexpm/v/supex.svg?label=hexdocs "API docs")](https://hexdocs.pm/supex)
+  [![Hex Downloads](https://img.shields.io/hexpm/dt/supex)](https://hex.pm/packages/supex)
+  [![Last Updated](https://img.shields.io/github/last-commit/alexisruccius/supex.svg)](https://github.com/alexisruccius/supex/commits/master)
+  [![GitHub stars](https://img.shields.io/github/stars/alexisruccius/supex.svg)](https://github.com/alexisruccius/supex/stargazers)
+
   Supex = SuperCollider + Elixir
 
   An Elixir wrapper for the music live-coding language SuperCollider.
