@@ -11,8 +11,6 @@ Supex communicates with SuperCollider's `sclang` tool, letting you generate and 
 
 Built for musicians, coders, and live performers who want to use Elixir for audio synthesis.
 
-👉 Requires `sclang` installed (`sudo apt install sclang` on Linux)
-
 ## Installation
 
 The package can be installed by adding `supex` to your list of dependencies in `mix.exs`:
@@ -25,18 +23,17 @@ def deps do
 end
 ```
 
-  > #### Note on v0.2.0 {: .note}
+  > #### Note on v0.2.0 {: .tip}
   > The library is now fully refactored with a clear structure and consistent naming.  
   > The sound naming issue in v0.1.0 has been fixed.
 
+  > #### ⚙ Requires `sclang` to be installed {: .info}
+  > Install with `sudo apt install supercollider-language` or `sudo apt install supercollider` on Ubuntu.
+  > For all platforms, see [SuperCollider's installation guide](https://supercollider.github.io/downloads.html).
 
 ## 🔍 Learn SuperCollider basics
 
 https://doc.sccode.org/Tutorials/Getting-Started/00-Getting-Started-With-SC.html
-
-## ⚙️ Requirements:
-SuperCollider's `sclang` must be installed.
-Example (Linux): `sudo apt install sclang`
 
 ## 🟢 Start the SuperCollider sclang server
 
