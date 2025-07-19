@@ -31,3 +31,6 @@ xref*
 # vscode
 .vscode/
 
+# asdf version
+.tool-versions
+

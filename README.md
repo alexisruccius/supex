@@ -53,7 +53,7 @@ iex> Supex.Sclang.start_link(:ok)
 
 ```elixir
 iex> import Supex
-iex> sin() |> freq(369) |> pan |> play("y")
+iex> sin() |> freq(269) |> pan |> play("y")
 iex> stop("y")
 ```
 
