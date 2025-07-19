@@ -12,6 +12,8 @@ defmodule Supex.Ugen.Saw do
   `add` this value will be added to the output.
 
   """
+  @moduledoc since: "0.2.0"
+
   defstruct freq: 440, mul: 0.1, add: 0, lfo: false
 
   @doc """
@@ -25,6 +27,7 @@ defmodule Supex.Ugen.Saw do
   iex> %Saw{freq: 440, mul: 0.1, add: 0, lfo: true}
   "Saw.kr(freq: 440, mul: 0.1, add: 0);"
   """
+  @doc since: "0.2.0"
   @spec command(struct()) :: binary()
   def command(%__MODULE__{} = saw) do
     %__MODULE__{freq: freq, mul: mul, add: add, lfo: lfo} = saw

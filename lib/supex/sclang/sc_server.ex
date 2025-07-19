@@ -2,6 +2,7 @@ defmodule Supex.Sclang.ScServer do
   @moduledoc """
   Commands for a SC server, like booting or stop playing all sounds.
   """
+  @moduledoc since: "0.1.0"
 
   alias Supex.Sclang
 

@@ -13,6 +13,8 @@ defmodule Supex.Ugen.Pulse do
 
   `add` this value will be added to the output.
   """
+  @moduledoc since: "0.2.0"
+
   defstruct freq: 440, width: 0.5, mul: 0.2, add: 0, lfo: false
 
   @doc """
@@ -26,6 +28,7 @@ defmodule Supex.Ugen.Pulse do
   iex> %Pulse{freq: 440, width: 0, mul: 0.1, add: 0, lfo: true}
   "Pulse.kr(freq: 440, width: 0, mul: 0.1, add: 0);"
   """
+  @doc since: "0.2.0"
   @spec command(struct()) :: binary()
   def command(%__MODULE__{} = pulse) do
     %__MODULE__{freq: freq, width: width, mul: mul, add: add, lfo: lfo} = pulse

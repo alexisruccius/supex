@@ -15,6 +15,8 @@ defmodule Supex.Ugen.SinOsc do
   `add` this value will be added to the output.
 
   """
+  @moduledoc since: "0.2.0"
+
   defstruct freq: 440, phase: 0, mul: 0.1, add: 0, lfo: false
 
   @doc """
@@ -28,6 +30,7 @@ defmodule Supex.Ugen.SinOsc do
   iex> %SinOsc{freq: 440, phase: 0, mul: 0.1, add: 0, lfo: true}
   "SinOsc.kr(freq: 440, phase: 0, mul: 0.1, add: 0);"
   """
+  @doc since: "0.2.0"
   @spec command(struct()) :: binary()
   def command(%__MODULE__{} = sin_osc) do
     %__MODULE__{freq: freq, phase: phase, mul: mul, add: add, lfo: lfo} = sin_osc

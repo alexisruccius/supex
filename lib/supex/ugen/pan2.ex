@@ -9,6 +9,7 @@ defmodule Supex.Ugen.Pan2 do
   - `pos`: pan position (-1.0 = left, 0 = center, 1.0 = right), defaults to center.
   - `level`: output level scaling
   """
+  @moduledoc since: "0.2.0"
 
   defstruct in: "SinOsc.ar(440)", pos: 0, level: 1
 
@@ -23,6 +24,7 @@ defmodule Supex.Ugen.Pan2 do
       iex> %Pan2{in: "SinOsc.kr(2)", pos: -0.5, level: 0.8, lfo: true}
       "Pan2.kr(SinOsc.kr(2), pos: -0.5, level: 0.8);"
   """
+  @doc since: "0.2.0"
   @spec command(struct()) :: binary()
   def command(%__MODULE__{in: input, pos: pos, level: level}) do
     "Pan2.ar(#{input}, pos: #{pos}, level: #{level});"

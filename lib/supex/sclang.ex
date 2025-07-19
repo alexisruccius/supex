@@ -3,6 +3,7 @@ defmodule Supex.Sclang do
   Starts the port for SuperCollider's `sclang` and
   sends SuperCollider's commands to this `sclang` port.
   """
+  @moduledoc since: "0.1.0"
 
   use GenServer
   require Logger

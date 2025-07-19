@@ -2,6 +2,7 @@ defmodule Supex.Sclang.ScPort do
   @moduledoc """
   Port to the SuperCollider's command line tool `sclang`.
   """
+  @moduledoc since: "0.1.0"
 
   @doc """
   Opens a port to SC's `sclang.`

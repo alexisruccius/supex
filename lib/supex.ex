@@ -99,6 +99,7 @@ defmodule Supex do
   Supex is in early development.
   Expect API changes.
   """
+  @moduledoc since: "0.1.0"
 
   alias Supex.Command
   alias Supex.Sclang
