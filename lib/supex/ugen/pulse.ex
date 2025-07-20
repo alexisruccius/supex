@@ -22,11 +22,13 @@ defmodule Supex.Ugen.Pulse do
 
   ## example
 
-  iex> %Pulse{freq: 440, width: 0, mul: 0.1, add: 0, lfo: false}
-  "Pulse.ar(freq: 440, width: 0, mul: 0.1, add: 0);"
+      iex> alias Supex.Ugen.Pulse
+      iex> %Pulse{freq: 440, width: 0, mul: 0.1, add: 0, lfo: false} |> Pulse.command()
+      "Pulse.ar(freq: 440, width: 0, mul: 0.1, add: 0);"
 
-  iex> %Pulse{freq: 440, width: 0, mul: 0.1, add: 0, lfo: true}
-  "Pulse.kr(freq: 440, width: 0, mul: 0.1, add: 0);"
+      iex> alias Supex.Ugen.Pulse
+      iex> %Pulse{freq: 440, width: 0, mul: 0.1, add: 0, lfo: true} |> Pulse.command()
+      "Pulse.kr(freq: 440, width: 0, mul: 0.1, add: 0);"
   """
   @doc since: "0.2.0"
   @spec command(struct()) :: binary()

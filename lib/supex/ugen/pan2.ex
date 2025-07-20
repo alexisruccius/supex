@@ -18,11 +18,9 @@ defmodule Supex.Ugen.Pan2 do
 
   ## Examples
 
-      iex> %Pan2{in: "SinOsc.ar(440)", pos: 0.5, level: 1.0, lfo: false}
+      iex> alias Supex.Ugen.Pan2
+      iex> %Pan2{in: "SinOsc.ar(440)", pos: 0.5, level: 1.0} |> Pan2.command()
       "Pan2.ar(SinOsc.ar(440), pos: 0.5, level: 1.0);"
-
-      iex> %Pan2{in: "SinOsc.kr(2)", pos: -0.5, level: 0.8, lfo: true}
-      "Pan2.kr(SinOsc.kr(2), pos: -0.5, level: 0.8);"
   """
   @doc since: "0.2.0"
   @spec command(struct()) :: binary()

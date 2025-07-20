@@ -3,6 +3,8 @@ defmodule Supex.Ugen.SinOscTest do
 
   alias Supex.Ugen.SinOsc
 
+  doctest SinOsc
+
   describe "%SinOsc{} struct" do
     test "returns default %SinOsc{} struct" do
       assert %SinOsc{freq: 440, phase: 0, mul: 0.1, add: 0} = %SinOsc{}

@@ -3,6 +3,8 @@ defmodule Supex.Ugen.PulseTest do
 
   alias Supex.Ugen.Pulse
 
+  doctest Pulse
+
   describe "%Pulse{} struct" do
     test "returns default %Pulse{} struct" do
       assert %Pulse{freq: 440, width: 0.5, mul: 0.2, add: 0} = %Pulse{}

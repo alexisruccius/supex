@@ -21,11 +21,13 @@ defmodule Supex.Ugen.Saw do
 
   ## example
 
-  iex> %Saw{freq: 440, mul: 0.1, add: 0, lfo: false}
-  "Saw.ar(freq: 440, mul: 0.1, add: 0);"
+      iex> alias Supex.Ugen.Saw
+      iex> %Saw{freq: 440, mul: 0.1, add: 0, lfo: false} |> Saw.command()
+      "Saw.ar(freq: 440, mul: 0.1, add: 0);"
 
-  iex> %Saw{freq: 440, mul: 0.1, add: 0, lfo: true}
-  "Saw.kr(freq: 440, mul: 0.1, add: 0);"
+      iex> alias Supex.Ugen.Saw
+      iex> %Saw{freq: 440, mul: 0.1, add: 0, lfo: true} |> Saw.command()
+      "Saw.kr(freq: 440, mul: 0.1, add: 0);"
   """
   @doc since: "0.2.0"
   @spec command(struct()) :: binary()

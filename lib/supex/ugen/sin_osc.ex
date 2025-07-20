@@ -24,11 +24,13 @@ defmodule Supex.Ugen.SinOsc do
 
   ## example
 
-  iex> %SinOsc{freq: 440, phase: 0, mul: 0.1, add: 0, lfo: false}
-  "SinOsc.ar(freq: 440, phase: 0, mul: 0.1, add: 0);"
+      iex> alias Supex.Ugen.SinOsc
+      iex> %SinOsc{freq: 440, phase: 0, mul: 0.1, add: 0, lfo: false} |> SinOsc.command()
+      "SinOsc.ar(freq: 440, phase: 0, mul: 0.1, add: 0);"
 
-  iex> %SinOsc{freq: 440, phase: 0, mul: 0.1, add: 0, lfo: true}
-  "SinOsc.kr(freq: 440, phase: 0, mul: 0.1, add: 0);"
+      iex> alias Supex.Ugen.SinOsc
+      iex> %SinOsc{freq: 440, phase: 0, mul: 0.1, add: 0, lfo: true} |> SinOsc.command()
+      "SinOsc.kr(freq: 440, phase: 0, mul: 0.1, add: 0);"
   """
   @doc since: "0.2.0"
   @spec command(struct()) :: binary()

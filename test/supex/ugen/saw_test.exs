@@ -3,6 +3,8 @@ defmodule Supex.Ugen.SawTest do
 
   alias Supex.Ugen.Saw
 
+  doctest Saw
+
   describe "%Saw{} struct" do
     test "returns default %SinOsc{} struct" do
       assert %Saw{freq: 440, mul: 0.1, add: 0} = %Saw{}

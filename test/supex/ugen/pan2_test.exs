@@ -3,6 +3,8 @@ defmodule Supex.Ugen.Pan2Test do
 
   alias Supex.Ugen.Pan2
 
+  doctest Pan2
+
   describe "%Pan2{} struct" do
     test "returns default %Pan2{} struct" do
       assert %Pan2{in: "SinOsc.ar(440)", pos: 0, level: 1} = %Pan2{}
