@@ -387,6 +387,9 @@ defmodule Supex do
   While SuperCollider only accepts single characters as global variables (e.g., "x", "y", "z"),
   longer names can be used as environment variables and will be declared accordingly.
 
+  Note: Do not use `"s"` as a name — it's globally reserved for the SuperCollider server.
+  If `"s"` is used, it will automatically default to `"x"`.
+
   ## examples
 
       iex> import Supex

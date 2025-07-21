@@ -82,6 +82,13 @@ defmodule Supex.CommandTest do
       assert Command.play(sc_command, "z") == result_single
       assert Command.play(sc_command, "space_sound") == result_more_chars
     end
+
+    test "do not use s as a name — it's globally reserved for the SuperCollider server - use default x" do
+      sc_command = "SinOsc.ar(freq: 12, phase: 0, mul: 0.1, add: 0);"
+      result = "x = { SinOsc.ar(freq: 12, phase: 0, mul: 0.1, add: 0); }.play"
+
+      assert Command.play(sc_command, "s") == result
+    end
   end
 
   describe "stop/1" do

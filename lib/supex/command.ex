@@ -27,8 +27,14 @@ defmodule Supex.Command do
 
   While SuperCollider only accepts single characters as global variables (e.g., "y", "i"),
   longer names can be used as environment variables and will be declared accordingly.
+
+  Note: Do not use `"s"` as a name — it's globally reserved for the SuperCollider server.
+  If `"s"` is used, it will automatically default to `"x"`.
   """
   @doc since: "0.2.0"
+  # do not use "s" as a name — it's globally reserved for the SuperCollider server
+  def play(sc_command, name) when name == "s", do: play(sc_command)
+
   def play(sc_command, name) when byte_size(name) == 1,
     do: name <> " = { " <> sc_command <> " }.play"
 
