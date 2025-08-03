@@ -8,8 +8,8 @@ defmodule Supex.Sclang.ScPort do
   Opens a port to SC's `sclang.`
   """
   @doc since: "0.1.0"
-  @spec open() :: port()
-  def open(), do: Port.open({:spawn, "sclang"}, [:binary])
+  @spec open :: port()
+  def open, do: Port.open({:spawn, "sclang"}, [:binary])
 
   @doc since: "0.1.0"
   @spec close(atom() | port()) :: true

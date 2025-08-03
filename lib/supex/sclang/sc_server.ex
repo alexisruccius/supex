@@ -9,21 +9,21 @@ defmodule Supex.Sclang.ScServer do
   require Logger
 
   @doc since: "0.1.0"
-  @spec stop_playing() :: <<_::72>>
-  def stop_playing(), do: "s.freeAll"
+  @spec stop_playing :: <<_::72>>
+  def stop_playing, do: "s.freeAll"
 
   @doc since: "0.1.0"
-  @spec boot() :: <<_::48>>
-  def boot(), do: "s.boot"
+  @spec boot :: <<_::48>>
+  def boot, do: "s.boot"
 
   @doc since: "0.1.0"
-  @spec booted(%Supex.Sclang{}) :: struct()
+  @spec booted(Supex.Sclang.t()) :: struct()
   def booted(%Sclang{} = sclang) do
     booted_message()
     sclang |> struct!(sc_server_booted: true)
   end
 
-  defp booted_message() do
+  defp booted_message do
     Logger.info(
       "-------------------- SuperCollider Server booted!!! ----------------------------"
     )

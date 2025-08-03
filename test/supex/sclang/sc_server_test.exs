@@ -1,5 +1,5 @@
 defmodule Supex.Sclang.ScServerTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: true
 
   alias Supex.Sclang.ScServer
 

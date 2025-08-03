@@ -11,6 +11,7 @@ defmodule Supex.Ugen.Pan2 do
   """
   @moduledoc since: "0.2.0"
 
+  @type t() :: %__MODULE__{in: binary(), pos: number(), level: number()}
   defstruct in: "SinOsc.ar(440)", pos: 0, level: 1
 
   @doc """

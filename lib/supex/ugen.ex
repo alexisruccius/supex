@@ -18,22 +18,25 @@ defmodule Supex.Ugen do
   Create a sine oscillator.
   """
   @doc since: "0.2.0"
-  def sin(), do: %SinOsc{}
+  @spec sin :: SinOsc.t()
+  def sin, do: %SinOsc{}
 
   @doc """
   Create a saw oscillator.
   """
   @doc since: "0.2.0"
-  def saw(), do: %Saw{}
+  @spec saw :: Saw.t()
+  def saw, do: %Saw{}
 
   @doc """
   Create a pulse oscillator.
   """
   @doc since: "0.2.0"
-  def pulse(), do: %Pulse{}
+  @spec pulse() :: Pulse.t()
+  def pulse, do: %Pulse{}
 
   @doc since: "0.2.0"
-  @spec pan(struct()) :: %Pan2{}
+  @spec pan(struct()) :: Pan2.t()
   def pan(ugen), do: %Pan2{in: ugen}
 
   @doc since: "0.2.0"

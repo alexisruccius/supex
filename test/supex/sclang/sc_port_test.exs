@@ -15,7 +15,7 @@ defmodule Supex.Sclang.ScPortTest do
 
     test "port started" do
       port = ScPort.open()
-      assert Port.info(port) |> Keyword.get(:name) == ~c"sclang"
+      assert port |> Port.info() |> Keyword.get(:name) == ~c"sclang"
     end
   end
 

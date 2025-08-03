@@ -122,8 +122,8 @@ defmodule Supex do
   """
   @deprecated "Use Supex.sin/0 instead."
   @doc since: "0.1.0"
-  @spec osc() :: struct()
-  def osc(), do: Ugen.sin()
+  @spec osc :: struct()
+  def osc, do: Ugen.sin()
 
   @deprecated "Use Supex.sin/0, Supex.saw/0, or Supex.pulse/0 instead"
   @doc since: "0.1.0"
@@ -159,8 +159,8 @@ defmodule Supex do
       iex> stop("y")
   """
   @doc since: "0.2.0"
-  @spec sin() :: %SinOsc{}
-  defdelegate sin(), to: Ugen
+  @spec sin :: SinOsc.t()
+  defdelegate sin, to: Ugen
 
   @doc """
   Create a saw oscillator.
@@ -187,8 +187,8 @@ defmodule Supex do
       iex> stop("y")
   """
   @doc since: "0.2.0"
-  @spec saw() :: %Saw{}
-  defdelegate saw(), to: Ugen
+  @spec saw :: Saw.t()
+  defdelegate saw, to: Ugen
 
   @doc """
   Create a pulse oscillator.
@@ -217,8 +217,8 @@ defmodule Supex do
       iex> stop("y")
   """
   @doc since: "0.2.0"
-  @spec pulse() :: %Pulse{}
-  defdelegate pulse(), to: Ugen
+  @spec pulse :: Pulse.t()
+  defdelegate pulse, to: Ugen
 
   @doc """
   Transforms a "normal" oscillator to a LFO to use it as a modulator.
@@ -328,7 +328,7 @@ defmodule Supex do
       iex> sin() |> freq(269) |> pan |> pos(0.69) |> play
   """
   @doc since: "0.2.0"
-  @spec pan(struct()) :: %Pan2{}
+  @spec pan(struct()) :: Pan2.t()
   defdelegate pan(ugen), to: Ugen
 
   @doc """
@@ -369,7 +369,7 @@ defmodule Supex do
       iex> sin() |> freq(269) |> play
   """
   @doc since: "0.1.0"
-  @spec play(struct() | binary()) :: %Sclang{}
+  @spec play(struct() | binary()) :: Sclang.t()
   def play(ugen) when is_struct(ugen), do: ugen |> Command.build() |> play()
 
   @doc since: "0.1.0"
@@ -401,7 +401,7 @@ defmodule Supex do
       iex> stop("sound")
   """
   @doc since: "0.2.0"
-  @spec play(struct() | binary(), binary()) :: %Sclang{}
+  @spec play(struct() | binary(), binary()) :: Sclang.t()
   def play(ugen, name) when is_struct(ugen) and is_binary(name) do
     ugen |> Command.build() |> play(name)
   end
@@ -424,8 +424,8 @@ defmodule Supex do
       iex> stop()
   """
   @doc since: "0.2.0"
-  @spec stop() :: %Sclang{}
-  def stop(), do: Sclang.stop_playing()
+  @spec stop :: Sclang.t()
+  def stop, do: Sclang.stop_playing()
 
   @doc """
   Stop playing a SuperCollider command by name.
@@ -445,14 +445,14 @@ defmodule Supex do
       iex> stop("y")
   """
   @doc since: "0.1.0"
-  @spec stop(binary()) :: %Sclang{}
-  def stop(name) when is_binary(name), do: Command.stop(name) |> Sclang.execute()
+  @spec stop(binary()) :: Sclang.t()
+  def stop(name) when is_binary(name), do: name |> Command.stop() |> Sclang.execute()
 
   @doc "Stops all sound playing."
   @doc since: "0.1.0"
   @deprecated "Use Supex.stop/0 instead"
-  @spec stop_playing() :: %Sclang{}
-  defdelegate stop_playing(), to: Sclang
+  @spec stop_playing :: Sclang.t()
+  defdelegate stop_playing, to: Sclang
 
   @doc """
   Executes a raw SuperCollider command on the `sclang` server.
@@ -466,6 +466,6 @@ defmodule Supex do
       iex> stop()
   """
   @doc since: "0.1.0"
-  @spec execute(binary()) :: %Sclang{}
+  @spec execute(binary()) :: Sclang.t()
   defdelegate execute(sc_command), to: Sclang
 end

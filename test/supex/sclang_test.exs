@@ -19,7 +19,7 @@ defmodule Supex.SclangTest do
       sc_command = "{ SinOsc.ar(freq: 369, phase: 0, mul: 0.1, add: 0); }.play"
       {result, log} = with_log(fn -> Sclang.execute(sc_command) end)
 
-      assert %Supex.Sclang{port: _, sc_server_booted: false} = result
+      assert %Supex.Sclang{port: _port, sc_server_booted: false} = result
       assert log =~ "Sclang Server is booting, but not started yet!"
     end
   end
@@ -52,7 +52,7 @@ defmodule Supex.SclangTest do
       sc_command = "{ SinOsc.ar(freq: 369, phase: 0, mul: 0.1, add: 0); }.play"
       result = Sclang.execute(sc_command)
 
-      assert %Sclang{port: _, sc_server_booted: true} = result
+      assert %Sclang{port: _port, sc_server_booted: true} = result
     end
   end
 
@@ -87,28 +87,28 @@ defmodule Supex.SclangTest do
       port = "test"
       data = "SuperCollider 3 server ready.\n"
       state = %Sclang{}
-      assert {:noreply, _} = Sclang.handle_info({port, {:data, data}}, state)
+      assert {:noreply, _new_state} = Sclang.handle_info({port, {:data, data}}, state)
     end
 
     test "handle other >server booted< message from port" do
       port = "test"
       data = "Shared memory server interface initialized"
       state = %Sclang{}
-      assert {:noreply, _} = Sclang.handle_info({port, {:data, data}}, state)
+      assert {:noreply, _new_state} = Sclang.handle_info({port, {:data, data}}, state)
     end
 
     test "handle >stop playing a sound< message from port" do
       port = "test"
       data = "s.freeAll\n"
       state = %Sclang{}
-      assert {:noreply, _} = Sclang.handle_info({port, {:data, data}}, state)
+      assert {:noreply, _new_state} = Sclang.handle_info({port, {:data, data}}, state)
     end
 
     test "handle other message from port" do
       port = "test"
       data = "random message.\n"
       state = %Sclang{}
-      assert {:noreply, _} = Sclang.handle_info({port, {:data, data}}, state)
+      assert {:noreply, _new_state} = Sclang.handle_info({port, {:data, data}}, state)
     end
   end
 end

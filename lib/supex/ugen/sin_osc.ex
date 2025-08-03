@@ -17,6 +17,13 @@ defmodule Supex.Ugen.SinOsc do
   """
   @moduledoc since: "0.2.0"
 
+  @type t() :: %__MODULE__{
+          freq: number(),
+          phase: number(),
+          mul: number(),
+          add: number(),
+          lfo: boolean()
+        }
   defstruct freq: 440, phase: 0, mul: 0.1, add: 0, lfo: false
 
   @doc """

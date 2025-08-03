@@ -15,6 +15,13 @@ defmodule Supex.Ugen.Pulse do
   """
   @moduledoc since: "0.2.0"
 
+  @type t() :: %__MODULE__{
+          freq: number(),
+          width: number(),
+          mul: number(),
+          add: number(),
+          lfo: boolean()
+        }
   defstruct freq: 440, width: 0.5, mul: 0.2, add: 0, lfo: false
 
   @doc """

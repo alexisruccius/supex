@@ -6,7 +6,7 @@ defmodule Supex.CommandTest do
 
   describe "build/1" do
     test "takes a ugen struct like %SinOsc{} and returns a string" do
-      assert Command.build(%SinOsc{}) |> is_binary()
+      assert %SinOsc{} |> Command.build() |> is_binary()
     end
 
     test "takes a ugen struct like `%SinOsc{}` and returns the SuperCollider command" do

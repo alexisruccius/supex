@@ -14,6 +14,7 @@ defmodule Supex.Ugen.Saw do
   """
   @moduledoc since: "0.2.0"
 
+  @type t() :: %__MODULE__{freq: number(), mul: number(), add: number(), lfo: boolean()}
   defstruct freq: 440, mul: 0.1, add: 0, lfo: false
 
   @doc """
