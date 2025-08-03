@@ -40,7 +40,7 @@ defmodule Supex.Ugen.SinOsc do
       "SinOsc.kr(freq: 440, phase: 0, mul: 0.1, add: 0);"
   """
   @doc since: "0.2.0"
-  @spec command(struct()) :: binary()
+  @spec command(t()) :: binary()
   def command(%__MODULE__{} = sin_osc) do
     %__MODULE__{freq: freq, phase: phase, mul: mul, add: add, lfo: lfo} = sin_osc
     "SinOsc.ar(freq: #{freq}, phase: #{phase}, mul: #{mul}, add: #{add});" |> check_lfo(lfo)

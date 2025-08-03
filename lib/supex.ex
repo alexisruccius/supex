@@ -122,12 +122,12 @@ defmodule Supex do
   """
   @deprecated "Use Supex.sin/0 instead."
   @doc since: "0.1.0"
-  @spec osc :: struct()
+  @spec osc :: Ugen.t()
   def osc, do: Ugen.sin()
 
   @deprecated "Use Supex.sin/0, Supex.saw/0, or Supex.pulse/0 instead"
   @doc since: "0.1.0"
-  @spec osc(atom()) :: struct()
+  @spec osc(atom()) :: Ugen.t()
   def osc(:sin), do: Ugen.sin()
   def osc(:saw), do: Ugen.saw()
   def osc(:pulse), do: Ugen.pulse()
@@ -239,7 +239,7 @@ defmodule Supex do
       iex> stop()
   """
   @doc since: "0.1.0"
-  @spec lfo(struct()) :: struct()
+  @spec lfo(Ugen.t()) :: Ugen.t()
   defdelegate lfo(ugen), to: Ugen
 
   @doc """
@@ -252,7 +252,7 @@ defmodule Supex do
       iex> stop("y")
   """
   @doc since: "0.1.0"
-  @spec freq(struct(), integer() | float() | binary() | struct()) :: struct()
+  @spec freq(Ugen.t(), integer() | float() | binary() | Ugen.t()) :: Ugen.t()
   defdelegate freq(ugen, freq), to: Ugen
 
   @doc """
@@ -267,7 +267,7 @@ defmodule Supex do
       iex> stop("y")
   """
   @doc since: "0.1.0"
-  @spec width(struct(), integer() | float() | binary() | struct()) :: struct()
+  @spec width(Ugen.t(), integer() | float() | binary() | Ugen.t()) :: Ugen.t()
   defdelegate width(ugen, width), to: Ugen
 
   @doc """
@@ -280,7 +280,7 @@ defmodule Supex do
       iex> stop("y")
   """
   @doc since: "0.1.0"
-  @spec phase(struct(), integer() | float() | binary() | struct()) :: struct()
+  @spec phase(Ugen.t(), integer() | float() | binary() | Ugen.t()) :: Ugen.t()
   defdelegate phase(ugen, phase), to: Ugen
 
   @doc """
@@ -295,7 +295,7 @@ defmodule Supex do
       iex> stop("y")
   """
   @doc since: "0.1.0"
-  @spec mul(struct(), integer() | float() | binary() | struct()) :: struct()
+  @spec mul(Ugen.t(), integer() | float() | binary() | Ugen.t()) :: Ugen.t()
   defdelegate mul(ugen, mul), to: Ugen
 
   @doc """
@@ -310,7 +310,7 @@ defmodule Supex do
       iex> stop("y")
   """
   @doc since: "0.1.0"
-  @spec add(struct(), integer() | float() | binary() | struct()) :: struct()
+  @spec add(Ugen.t(), integer() | float() | binary() | Ugen.t()) :: Ugen.t()
   defdelegate add(ugen, add), to: Ugen
 
   @doc """
@@ -328,7 +328,7 @@ defmodule Supex do
       iex> sin() |> freq(269) |> pan |> pos(0.69) |> play
   """
   @doc since: "0.2.0"
-  @spec pan(struct()) :: Pan2.t()
+  @spec pan(Ugen.t()) :: Pan2.t()
   defdelegate pan(ugen), to: Ugen
 
   @doc """
@@ -342,7 +342,7 @@ defmodule Supex do
       iex> sin() |> freq(269) |> pan |> pos(0.69) |> play
   """
   @doc since: "0.2.0"
-  @spec pos(struct(), integer() | float() | binary() | struct()) :: struct()
+  @spec pos(Ugen.t(), integer() | float() | binary() | Ugen.t()) :: Ugen.t()
   defdelegate pos(ugen, pos), to: Ugen
 
   @doc """
@@ -354,7 +354,7 @@ defmodule Supex do
       iex> sin() |> freq(269) |> pan |> level(0.5) |> play
   """
   @doc since: "0.2.0"
-  @spec level(struct(), integer() | float() | binary() | struct()) :: struct()
+  @spec level(Ugen.t(), integer() | float() | binary() | Ugen.t()) :: Ugen.t()
   defdelegate level(ugen, level), to: Ugen
 
   @doc """
@@ -369,7 +369,7 @@ defmodule Supex do
       iex> sin() |> freq(269) |> play
   """
   @doc since: "0.1.0"
-  @spec play(struct() | binary()) :: Sclang.t()
+  @spec play(Ugen.t() | binary()) :: Sclang.t()
   def play(ugen) when is_struct(ugen), do: ugen |> Command.build() |> play()
 
   @doc since: "0.1.0"
@@ -401,7 +401,7 @@ defmodule Supex do
       iex> stop("sound")
   """
   @doc since: "0.2.0"
-  @spec play(struct() | binary(), binary()) :: Sclang.t()
+  @spec play(Ugen.t() | binary(), binary()) :: Sclang.t()
   def play(ugen, name) when is_struct(ugen) and is_binary(name) do
     ugen |> Command.build() |> play(name)
   end

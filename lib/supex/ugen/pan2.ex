@@ -24,7 +24,7 @@ defmodule Supex.Ugen.Pan2 do
       "Pan2.ar(SinOsc.ar(440), pos: 0.5, level: 1.0);"
   """
   @doc since: "0.2.0"
-  @spec command(struct()) :: binary()
+  @spec command(t()) :: binary()
   def command(%__MODULE__{in: input, pos: pos, level: level}) do
     "Pan2.ar(#{input}, pos: #{pos}, level: #{level});"
   end

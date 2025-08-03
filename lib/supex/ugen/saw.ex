@@ -31,7 +31,7 @@ defmodule Supex.Ugen.Saw do
       "Saw.kr(freq: 440, mul: 0.1, add: 0);"
   """
   @doc since: "0.2.0"
-  @spec command(struct()) :: binary()
+  @spec command(t()) :: binary()
   def command(%__MODULE__{} = saw) do
     %__MODULE__{freq: freq, mul: mul, add: add, lfo: lfo} = saw
     "Saw.ar(freq: #{freq}, mul: #{mul}, add: #{add});" |> check_lfo(lfo)

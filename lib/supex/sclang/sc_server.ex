@@ -17,7 +17,7 @@ defmodule Supex.Sclang.ScServer do
   def boot, do: "s.boot"
 
   @doc since: "0.1.0"
-  @spec booted(Supex.Sclang.t()) :: struct()
+  @spec booted(Sclang.t()) :: Sclang.t()
   def booted(%Sclang{} = sclang) do
     booted_message()
     sclang |> struct!(sc_server_booted: true)

@@ -38,7 +38,7 @@ defmodule Supex.Ugen.Pulse do
       "Pulse.kr(freq: 440, width: 0, mul: 0.1, add: 0);"
   """
   @doc since: "0.2.0"
-  @spec command(struct()) :: binary()
+  @spec command(t()) :: binary()
   def command(%__MODULE__{} = pulse) do
     %__MODULE__{freq: freq, width: width, mul: mul, add: add, lfo: lfo} = pulse
     "Pulse.ar(freq: #{freq}, width: #{width}, mul: #{mul}, add: #{add});" |> check_lfo(lfo)

@@ -9,10 +9,13 @@ defmodule Supex.Ugen do
       %Supex.Ugen.SinOsc{add: 0.69, phase: 6, freq: 690, mul: 0.9}
   """
   @moduledoc since: "0.1.0"
+
   alias Supex.Ugen.Pan2
   alias Supex.Ugen.Pulse
   alias Supex.Ugen.Saw
   alias Supex.Ugen.SinOsc
+
+  @type t() :: Pan2.t() | Pulse.t() | Saw.t() | SinOsc.t()
 
   @doc """
   Create a sine oscillator.
@@ -32,19 +35,19 @@ defmodule Supex.Ugen do
   Create a pulse oscillator.
   """
   @doc since: "0.2.0"
-  @spec pulse() :: Pulse.t()
+  @spec pulse :: Pulse.t()
   def pulse, do: %Pulse{}
 
   @doc since: "0.2.0"
-  @spec pan(struct()) :: Pan2.t()
+  @spec pan(t()) :: Pan2.t()
   def pan(ugen), do: %Pan2{in: ugen}
 
   @doc since: "0.2.0"
-  @spec pos(struct(), integer() | float() | binary() | struct()) :: struct()
+  @spec pos(t(), integer() | float() | binary() | t()) :: Supex.Ugen.t()
   def pos(ugen, pos), do: ugen |> struct!(pos: pos)
 
   @doc since: "0.2.0"
-  @spec level(struct(), integer() | float() | binary() | struct()) :: struct()
+  @spec level(t(), integer() | float() | binary() | t()) :: t()
   def level(ugen, level), do: ugen |> struct!(level: level)
 
   @doc """
@@ -54,27 +57,27 @@ defmodule Supex.Ugen do
   cf. https://doc.sccode.org/Tutorials/Getting-Started/05-Functions-and-Sound.html
   """
   @doc since: "0.1.0"
-  @spec lfo(struct()) :: struct()
+  @spec lfo(t()) :: t()
   def lfo(ugen), do: ugen |> struct!(lfo: true)
   # def lfo(%{lfo: _lfo} = ugen), do: ugen |> struct!(lfo: true)
 
   @doc since: "0.1.0"
-  @spec freq(struct(), integer() | float() | binary() | struct()) :: struct()
+  @spec freq(t(), integer() | float() | binary() | t()) :: t()
   def freq(ugen, freq), do: ugen |> struct!(freq: freq)
 
   @doc since: "0.1.0"
-  @spec width(struct(), integer() | float() | binary() | struct()) :: struct()
+  @spec width(t(), integer() | float() | binary() | t()) :: t()
   def width(ugen, width), do: ugen |> struct!(width: width)
 
   @doc since: "0.1.0"
-  @spec phase(struct(), integer() | float() | binary() | struct()) :: struct()
+  @spec phase(t(), integer() | float() | binary() | t()) :: t()
   def phase(ugen, phase), do: ugen |> struct!(phase: phase)
 
   @doc since: "0.1.0"
-  @spec mul(struct(), integer() | float() | binary() | struct()) :: struct()
+  @spec mul(t(), integer() | float() | binary() | t()) :: t()
   def mul(ugen, mul), do: ugen |> struct!(mul: mul)
 
   @doc since: "0.1.0"
-  @spec add(struct(), integer() | float() | binary() | struct()) :: struct()
+  @spec add(t(), integer() | float() | binary() | t()) :: t()
   def add(ugen, add), do: ugen |> struct!(add: add)
 end

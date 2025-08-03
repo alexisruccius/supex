@@ -4,11 +4,13 @@ defmodule Supex.Command do
   """
   @moduledoc since: "0.2.0"
 
+  alias Supex.Ugen
+
   @doc """
   Builds the SuperCollider command from a ugen struct.
   """
   @doc since: "0.2.0"
-  @spec build(struct()) :: binary()
+  @spec build(Ugen.t()) :: binary()
   def build(ugen), do: ugen |> to_sc_command()
 
   @doc """
