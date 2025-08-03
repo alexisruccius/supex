@@ -355,7 +355,7 @@ defmodule Supex do
   """
   @doc since: "0.2.0"
   @spec level(struct(), integer() | float() | binary() | struct()) :: struct()
-  defdelegate level(ugen, pos), to: Ugen
+  defdelegate level(ugen, level), to: Ugen
 
   @doc """
   Play the composed oscillator, or a raw SuperCollider's command (as a string).
