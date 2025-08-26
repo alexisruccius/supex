@@ -44,7 +44,7 @@ defmodule Supex do
   ## 🟢 Start the SuperCollider sclang server
 
   ```elixir
-  iex> Supex.Sclang.start_link(:ok)
+  Supex.Sclang.start_link(:ok)
   ```
 
   ## 💡 Examples

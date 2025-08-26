@@ -1,13 +1,31 @@
 defmodule SupexTest do
-  use ExUnit.Case, async: true
+  use ExUnit.Case, async: true, group: :sclang_tests
 
   doctest Supex
+
+  import Mox
 
   alias Supex.Sclang
   alias Supex.Ugen.Pan2
   alias Supex.Ugen.Pulse
   alias Supex.Ugen.Saw
   alias Supex.Ugen.SinOsc
+
+  # Mox: make sure mocks are verified when the test exits
+  setup :verify_on_exit!
+
+  defp port_mock(_context) do
+    # Mox
+    Sclang.ScPortMock
+    |> expect(:open, fn _name, _opts -> Port.open({:spawn, "cat"}, [:binary]) end)
+
+    # Mox allowance definition
+    # its function is envoked later when the mock is used
+    Sclang.ScPortMock
+    |> allow(self(), fn -> GenServer.whereis(Sclang) end)
+
+    :ok
+  end
 
   describe "sin/0" do
     test "returns a %SinOsc{} sin oscillator" do
@@ -119,10 +137,10 @@ defmodule SupexTest do
   end
 
   describe "play/1" do
+    setup :port_mock
+
     test "returns a %Sclang{} struct" do
       {:ok, _pid} = start_supervised(Sclang)
-      # wait for sc server to boot
-      Process.sleep(4000)
 
       ugen = %SinOsc{freq: 4, phase: 0, mul: 0.2, add: 0.4, lfo: false}
       assert %Sclang{} = Supex.play(ugen)
@@ -130,10 +148,10 @@ defmodule SupexTest do
   end
 
   describe "play/2" do
+    setup :port_mock
+
     test "returns a %Sclang{} struct with name in the executed command" do
       {:ok, _pid} = start_supervised(Sclang)
-      # wait for sc server to boot
-      Process.sleep(4000)
 
       ugen = %SinOsc{freq: 4, phase: 0, mul: 0.2, add: 0.4, lfo: false}
       assert %Sclang{last_command_executed: command} = Supex.play(ugen, "z")
@@ -142,10 +160,10 @@ defmodule SupexTest do
   end
 
   describe "stop/0" do
+    setup :port_mock
+
     test "stops all playing sounds" do
       {:ok, _pid} = start_supervised(Sclang)
-      # wait for sc server to boot
-      Process.sleep(4000)
 
       assert %Sclang{} = Supex.stop()
     end

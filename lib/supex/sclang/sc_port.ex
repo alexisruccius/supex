@@ -4,12 +4,15 @@ defmodule Supex.Sclang.ScPort do
   """
   @moduledoc since: "0.1.0"
 
+  # for testing with Mox, cf. test_helpers.exs
+  @callback open(Port.name(), list()) :: port()
+
   @doc """
   Opens a port to SC's `sclang.`
   """
   @doc since: "0.1.0"
   @spec open :: port()
-  def open, do: Port.open({:spawn, "sclang"}, [:binary])
+  def open, do: impl().open({:spawn, "sclang"}, [:binary])
 
   @doc since: "0.1.0"
   @spec close(atom() | port()) :: true
@@ -27,6 +30,9 @@ defmodule Supex.Sclang.ScPort do
     send(port, {self(), {:command, sc_cmd_cleaned}})
     {port, {:command, sc_cmd_cleaned}}
   end
+
+  # :sc_port_mock only set for testing with Mox, cf. test_helpers.exs
+  defp impl, do: Application.get_env(:supex, :sc_port_mock, Port)
 
   defp only_execute_full_command(sc_command) do
     # sclang executes SC commands after a line break,
