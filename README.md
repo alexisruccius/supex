@@ -1,5 +1,6 @@
 # Supex
 
+[![Build Status](https://github.com/alexisruccius/supex/workflows/CI/badge.svg)](https://github.com/alexisruccius/supex/actions/workflows/CI.yml)
 [![Hex.pm](https://img.shields.io/hexpm/v/supex.svg)](https://hex.pm/packages/supex)
 [![API docs](https://img.shields.io/hexpm/v/supex.svg?label=hexdocs "API docs")](https://hexdocs.pm/supex)
 [![Hex Downloads](https://img.shields.io/hexpm/dt/supex)](https://hex.pm/packages/supex)
@@ -30,7 +31,7 @@ end
 ```
 
   > #### Note on v0.2.0 {: .tip}
-  > The library is now fully refactored with a clear structure and consistent naming.  
+  > The library is now fully refactored with a clear structure and consistent naming.
   > The sound naming issue in v0.1.0 has been fixed.
 
   > #### ⚙ Requires `sclang` to be installed {: .info}

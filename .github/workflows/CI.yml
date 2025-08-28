@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: mix test (OTP ${{matrix.otp}} | Elixir ${{matrix.elixir}})
+
+    strategy:
+      matrix:
+        include:
+          - elixir: 1.18.4
+            otp: 28.0.1
+
+    env:
+      MIX_ENV: test
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Elixir
+        uses: erlef/setup-beam@v1.19
+        with:
+          elixir-version: ${{ matrix.elixir }}
+          otp-version: ${{ matrix.otp }}
+      - name: Restore deps and _build cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            deps
+            _build
+          key: deps-${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}-${{ hashFiles('**/mix.lock') }}
+          restore-keys: |
+            deps-${{ runner.os }}-${{ matrix.otp }}-${{ matrix.elixir }}
+
+      - name: Install dependencies
+        run: mix deps.get
+      - name: Run compile (--warnings-as-errors)
+        run: mix compile --warnings-as-errors
+      - name: Run tests
+        run: mix test
+      - name: Run credo
+        run: mix credo --all --strict
+      - name: Run dialyzer
+        run: mix dialyzer
